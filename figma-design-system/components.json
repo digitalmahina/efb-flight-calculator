@@ -1,0 +1,407 @@
+{
+  "name": "EFB Component Library",
+  "description": "Библиотека компонентов для авиационной дизайн-системы",
+  "components": [
+    {
+      "name": "Button Primary",
+      "type": "button",
+      "description": "Основная кнопка действия",
+      "specs": {
+        "width": "auto",
+        "height": "40px",
+        "padding": "8px 24px",
+        "background": "#00FF00",
+        "color": "#0A0A0A",
+        "border": "1px solid #00FF00",
+        "borderRadius": "8px",
+        "fontFamily": "JetBrains Mono",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "textTransform": "uppercase",
+        "letterSpacing": "0.5px",
+        "boxShadow": "0 4px 16px rgba(0, 255, 0, 0.2)",
+        "hover": {
+          "background": "#00E600",
+          "boxShadow": "0 0 20px rgba(0, 255, 0, 0.3)"
+        },
+        "active": {
+          "transform": "translateY(1px)"
+        }
+      },
+      "variants": [
+        {
+          "name": "Small",
+          "height": "32px",
+          "padding": "6px 16px",
+          "fontSize": "10px"
+        },
+        {
+          "name": "Large",
+          "height": "48px",
+          "padding": "12px 32px",
+          "fontSize": "14px"
+        }
+      ]
+    },
+    {
+      "name": "Button Secondary",
+      "type": "button",
+      "description": "Вторичная кнопка",
+      "specs": {
+        "width": "auto",
+        "height": "40px",
+        "padding": "8px 24px",
+        "background": "rgba(255, 255, 255, 0.05)",
+        "color": "#888888",
+        "border": "1px solid #888888",
+        "borderRadius": "8px",
+        "fontFamily": "JetBrains Mono",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "textTransform": "uppercase",
+        "letterSpacing": "0.5px",
+        "backdropFilter": "blur(10px)",
+        "hover": {
+          "borderColor": "#FFAA00",
+          "color": "#FFAA00"
+        }
+      }
+    },
+    {
+      "name": "Button Danger",
+      "type": "button",
+      "description": "Кнопка опасного действия",
+      "specs": {
+        "width": "auto",
+        "height": "40px",
+        "padding": "8px 24px",
+        "background": "rgba(255, 255, 255, 0.05)",
+        "color": "#FF0000",
+        "border": "1px solid #FF0000",
+        "borderRadius": "8px",
+        "fontFamily": "JetBrains Mono",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "textTransform": "uppercase",
+        "letterSpacing": "0.5px",
+        "backdropFilter": "blur(10px)",
+        "hover": {
+          "background": "rgba(255, 0, 0, 0.1)",
+          "boxShadow": "0 0 20px rgba(255, 0, 0, 0.3)"
+        }
+      }
+    },
+    {
+      "name": "Panel",
+      "type": "container",
+      "description": "Основная панель интерфейса",
+      "specs": {
+        "width": "auto",
+        "height": "auto",
+        "background": "rgba(20, 20, 20, 0.95)",
+        "border": "1px solid rgba(0, 255, 0, 0.3)",
+        "borderRadius": "12px",
+        "backdropFilter": "blur(15px)",
+        "boxShadow": "0 8px 32px rgba(0, 0, 0, 0.3)",
+        "padding": "16px"
+      },
+      "variants": [
+        {
+          "name": "Compact",
+          "padding": "12px"
+        },
+        {
+          "name": "Spacious",
+          "padding": "24px"
+        }
+      ]
+    },
+    {
+      "name": "Data Card",
+      "type": "card",
+      "description": "Карточка с данными",
+      "specs": {
+        "width": "auto",
+        "height": "auto",
+        "background": "rgba(255, 255, 255, 0.05)",
+        "border": "1px solid rgba(0, 255, 0, 0.3)",
+        "borderRadius": "8px",
+        "padding": "16px",
+        "backdropFilter": "blur(5px)",
+        "hover": {
+          "borderColor": "rgba(0, 255, 0, 0.8)",
+          "boxShadow": "0 0 20px rgba(0, 255, 0, 0.3)"
+        }
+      },
+      "elements": [
+        {
+          "name": "Label",
+          "type": "text",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": "10px",
+          "fontWeight": "400",
+          "color": "#888888",
+          "textTransform": "uppercase",
+          "letterSpacing": "1px",
+          "marginBottom": "4px"
+        },
+        {
+          "name": "Value",
+          "type": "text",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": "24px",
+          "fontWeight": "700",
+          "color": "#00FF00",
+          "lineHeight": "1.2"
+        },
+        {
+          "name": "Unit",
+          "type": "text",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": "10px",
+          "fontWeight": "400",
+          "color": "#888888",
+          "textTransform": "uppercase",
+          "letterSpacing": "1px"
+        }
+      ]
+    },
+    {
+      "name": "Input Field",
+      "type": "input",
+      "description": "Поле ввода",
+      "specs": {
+        "width": "auto",
+        "height": "40px",
+        "background": "rgba(255, 255, 255, 0.05)",
+        "border": "1px solid rgba(0, 255, 0, 0.3)",
+        "borderRadius": "4px",
+        "padding": "8px 16px",
+        "fontFamily": "JetBrains Mono",
+        "fontSize": "14px",
+        "color": "#00FF00",
+        "focus": {
+          "borderColor": "rgba(0, 255, 0, 0.8)",
+          "boxShadow": "0 0 8px rgba(0, 255, 0, 0.2)"
+        }
+      },
+      "variants": [
+        {
+          "name": "With Unit",
+          "elements": [
+            {
+              "name": "Input",
+              "flex": "1"
+            },
+            {
+              "name": "Unit",
+              "padding": "8px 16px",
+              "background": "rgba(255, 255, 255, 0.05)",
+              "borderLeft": "1px solid rgba(0, 255, 0, 0.3)",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": "12px",
+              "color": "#888888"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Status Indicator",
+      "type": "indicator",
+      "description": "Индикатор статуса",
+      "specs": {
+        "width": "auto",
+        "height": "auto",
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "8px",
+        "padding": "8px 16px",
+        "background": "rgba(255, 255, 255, 0.05)",
+        "border": "1px solid rgba(0, 255, 0, 0.3)",
+        "borderRadius": "4px"
+      },
+      "elements": [
+        {
+          "name": "Dot",
+          "width": "8px",
+          "height": "8px",
+          "borderRadius": "50%",
+          "background": "#888888"
+        },
+        {
+          "name": "Text",
+          "fontFamily": "JetBrains Mono",
+          "fontSize": "12px",
+          "fontWeight": "600",
+          "color": "#FFFFFF",
+          "textTransform": "uppercase",
+          "letterSpacing": "1px"
+        }
+      ],
+      "variants": [
+        {
+          "name": "Active",
+          "dotBackground": "#00FF00",
+          "dotBoxShadow": "0 0 8px #00FF00"
+        },
+        {
+          "name": "Warning",
+          "dotBackground": "#FFAA00",
+          "dotBoxShadow": "0 0 8px #FFAA00"
+        },
+        {
+          "name": "Error",
+          "dotBackground": "#FF0000",
+          "dotBoxShadow": "0 0 8px #FF0000"
+        }
+      ]
+    },
+    {
+      "name": "Header",
+      "type": "layout",
+      "description": "Заголовок приложения",
+      "specs": {
+        "width": "100%",
+        "height": "80px",
+        "background": "rgba(20, 20, 20, 0.95)",
+        "borderBottom": "2px solid rgba(0, 255, 0, 0.3)",
+        "backdropFilter": "blur(10px)",
+        "padding": "0 24px",
+        "display": "flex",
+        "justifyContent": "space-between",
+        "alignItems": "center"
+      },
+      "elements": [
+        {
+          "name": "Left Section",
+          "display": "flex",
+          "alignItems": "center"
+        },
+        {
+          "name": "Center Section",
+          "display": "flex",
+          "alignItems": "center",
+          "gap": "24px"
+        },
+        {
+          "name": "Right Section",
+          "display": "flex",
+          "alignItems": "center"
+        }
+      ]
+    },
+    {
+      "name": "Footer",
+      "type": "layout",
+      "description": "Нижняя панель управления",
+      "specs": {
+        "width": "100%",
+        "height": "120px",
+        "background": "rgba(20, 20, 20, 0.95)",
+        "borderTop": "2px solid rgba(0, 255, 0, 0.3)",
+        "backdropFilter": "blur(10px)",
+        "padding": "0 24px",
+        "display": "flex",
+        "justifyContent": "space-between",
+        "alignItems": "center"
+      }
+    },
+    {
+      "name": "Notification",
+      "type": "notification",
+      "description": "Уведомление",
+      "specs": {
+        "width": "400px",
+        "height": "auto",
+        "background": "rgba(20, 20, 20, 0.95)",
+        "border": "1px solid rgba(0, 255, 0, 0.3)",
+        "borderRadius": "8px",
+        "backdropFilter": "blur(15px)",
+        "boxShadow": "0 8px 32px rgba(0, 0, 0, 0.3)",
+        "padding": "16px 24px"
+      },
+      "variants": [
+        {
+          "name": "Success",
+          "borderColor": "#00FF00",
+          "background": "rgba(0, 255, 0, 0.1)"
+        },
+        {
+          "name": "Warning",
+          "borderColor": "#FFAA00",
+          "background": "rgba(255, 170, 0, 0.1)"
+        },
+        {
+          "name": "Error",
+          "borderColor": "#FF0000",
+          "background": "rgba(255, 0, 0, 0.1)"
+        }
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "name": "Main Layout",
+      "description": "Основная компоновка приложения",
+      "specs": {
+        "width": "100vw",
+        "height": "100vh",
+        "display": "flex",
+        "flexDirection": "column",
+        "background": "#0A0A0A"
+      },
+      "elements": [
+        {
+          "name": "Header",
+          "height": "80px",
+          "flexShrink": "0"
+        },
+        {
+          "name": "Main Content",
+          "flex": "1",
+          "display": "grid",
+          "gridTemplateColumns": "300px 1fr 300px 300px",
+          "gap": "16px",
+          "padding": "16px"
+        },
+        {
+          "name": "Footer",
+          "height": "120px",
+          "flexShrink": "0"
+        }
+      ]
+    },
+    {
+      "name": "Mobile Layout",
+      "description": "Мобильная компоновка",
+      "specs": {
+        "width": "100vw",
+        "height": "100vh",
+        "display": "flex",
+        "flexDirection": "column",
+        "background": "#0A0A0A"
+      },
+      "elements": [
+        {
+          "name": "Header",
+          "height": "60px",
+          "flexShrink": "0"
+        },
+        {
+          "name": "Main Content",
+          "flex": "1",
+          "display": "flex",
+          "flexDirection": "column",
+          "gap": "8px",
+          "padding": "8px"
+        },
+        {
+          "name": "Footer",
+          "height": "80px",
+          "flexShrink": "0"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,553 @@
+{
+  "componentSpecifications": {
+    "header": {
+      "name": "Header",
+      "description": "Main application header with logo and navigation",
+      "figmaProperties": {
+        "width": "1920px",
+        "height": "80px",
+        "fills": [
+          {
+            "type": "SOLID",
+            "color": { "r": 0.05, "g": 0.05, "b": 0.05, "a": 1 }
+          }
+        ],
+        "strokes": [
+          {
+            "type": "SOLID", 
+            "color": { "r": 0.2, "g": 0.2, "b": 0.2, "a": 1 },
+            "weight": 1
+          }
+        ],
+        "paddingTop": 20,
+        "paddingBottom": 20,
+        "paddingLeft": 24,
+        "paddingRight": 24
+      },
+      "children": [
+        {
+          "name": "Logo",
+          "type": "TEXT",
+          "content": "EFB",
+          "fontSize": 32,
+          "fontWeight": 700,
+          "fontFamily": "JetBrains Mono",
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": { "r": 0.2, "g": 0.8, "b": 0.2, "a": 1 }
+            }
+          ],
+          "x": 24,
+          "y": 20
+        },
+        {
+          "name": "Title",
+          "type": "TEXT", 
+          "content": "Flight Calculator v2.0",
+          "fontSize": 16,
+          "fontWeight": 400,
+          "fontFamily": "Inter",
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": { "r": 0.7, "g": 0.7, "b": 0.7, "a": 1 }
+            }
+          ],
+          "x": 80,
+          "y": 25
+        },
+        {
+          "name": "Settings Button",
+          "type": "FRAME",
+          "width": 100,
+          "height": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": { "r": 0.1, "g": 0.1, "b": 0.1, "a": 1 }
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": { "r": 0.3, "g": 0.3, "b": 0.3, "a": 1 },
+              "weight": 1
+            }
+          ],
+          "cornerRadius": 8,
+          "x": 1796,
+          "y": 20,
+          "children": [
+            {
+              "name": "Button Text",
+              "type": "TEXT",
+              "content": "Settings",
+              "fontSize": 14,
+              "fontWeight": 500,
+              "fontFamily": "Inter",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": { "r": 0.9, "g": 0.9, "b": 0.9, "a": 1 }
+                }
+              ],
+              "x": 20,
+              "y": 12
+            }
+          ]
+        }
+      ]
+    },
+    
+    "flightDataPanel": {
+      "name": "Flight Data Panel",
+      "description": "Panel for flight data input and calculation results",
+      "figmaProperties": {
+        "width": "400px",
+        "height": "600px",
+        "fills": [
+          {
+            "type": "SOLID",
+            "color": { "r": 0.08, "g": 0.08, "b": 0.08, "a": 1 }
+          }
+        ],
+        "strokes": [
+          {
+            "type": "SOLID",
+            "color": { "r": 0.2, "g": 0.2, "b": 0.2, "a": 1 },
+            "weight": 1
+          }
+        ],
+        "cornerRadius": 12,
+        "paddingTop": 24,
+        "paddingBottom": 24,
+        "paddingLeft": 24,
+        "paddingRight": 24
+      },
+      "children": [
+        {
+          "name": "Panel Title",
+          "type": "TEXT",
+          "content": "Flight Data",
+          "fontSize": 20,
+          "fontWeight": 600,
+          "fontFamily": "Inter",
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": { "r": 0.9, "g": 0.9, "b": 0.9, "a": 1 }
+            }
+          ],
+          "x": 0,
+          "y": 0
+        },
+        {
+          "name": "Departure Input",
+          "type": "FRAME",
+          "width": 352,
+          "height": 60,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": { "r": 0.12, "g": 0.12, "b": 0.12, "a": 1 }
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": { "r": 0.3, "g": 0.3, "b": 0.3, "a": 1 },
+              "weight": 1
+            }
+          ],
+          "cornerRadius": 8,
+          "x": 0,
+          "y": 60,
+          "children": [
+            {
+              "name": "Input Label",
+              "type": "TEXT",
+              "content": "Departure Airport",
+              "fontSize": 12,
+              "fontWeight": 500,
+              "fontFamily": "Inter",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": { "r": 0.6, "g": 0.6, "b": 0.6, "a": 1 }
+                }
+              ],
+              "x": 12,
+              "y": 8
+            },
+            {
+              "name": "Input Field",
+              "type": "TEXT",
+              "content": "Enter ICAO code",
+              "fontSize": 14,
+              "fontWeight": 400,
+              "fontFamily": "Inter",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": { "r": 0.4, "g": 0.4, "b": 0.4, "a": 1 }
+                }
+              ],
+              "x": 12,
+              "y": 28
+            }
+          ]
+        },
+        {
+          "name": "Arrival Input",
+          "type": "FRAME",
+          "width": 352,
+          "height": 60,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": { "r": 0.12, "g": 0.12, "b": 0.12, "a": 1 }
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": { "r": 0.3, "g": 0.3, "b": 0.3, "a": 1 },
+              "weight": 1
+            }
+          ],
+          "cornerRadius": 8,
+          "x": 0,
+          "y": 140,
+          "children": [
+            {
+              "name": "Input Label",
+              "type": "TEXT",
+              "content": "Arrival Airport",
+              "fontSize": 12,
+              "fontWeight": 500,
+              "fontFamily": "Inter",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": { "r": 0.6, "g": 0.6, "b": 0.6, "a": 1 }
+                }
+              ],
+              "x": 12,
+              "y": 8
+            },
+            {
+              "name": "Input Field",
+              "type": "TEXT",
+              "content": "Enter ICAO code",
+              "fontSize": 14,
+              "fontWeight": 400,
+              "fontFamily": "Inter",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": { "r": 0.4, "g": 0.4, "b": 0.4, "a": 1 }
+                }
+              ],
+              "x": 12,
+              "y": 28
+            }
+          ]
+        },
+        {
+          "name": "Calculate Button",
+          "type": "FRAME",
+          "width": 352,
+          "height": 48,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": { "r": 0.2, "g": 0.8, "b": 0.2, "a": 1 }
+            }
+          ],
+          "cornerRadius": 8,
+          "x": 0,
+          "y": 320,
+          "children": [
+            {
+              "name": "Button Text",
+              "type": "TEXT",
+              "content": "Calculate Flight",
+              "fontSize": 16,
+              "fontWeight": 600,
+              "fontFamily": "Inter",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": { "r": 0, "g": 0, "b": 0, "a": 1 }
+                }
+              ],
+              "x": 120,
+              "y": 14
+            }
+          ]
+        },
+        {
+          "name": "Distance Card",
+          "type": "FRAME",
+          "width": 160,
+          "height": 80,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": { "r": 0.1, "g": 0.1, "b": 0.1, "a": 1 }
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": { "r": 0.2, "g": 0.2, "b": 0.2, "a": 1 },
+              "weight": 1
+            }
+          ],
+          "cornerRadius": 8,
+          "x": 0,
+          "y": 400,
+          "children": [
+            {
+              "name": "Card Title",
+              "type": "TEXT",
+              "content": "Distance",
+              "fontSize": 12,
+              "fontWeight": 500,
+              "fontFamily": "Inter",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": { "r": 0.6, "g": 0.6, "b": 0.6, "a": 1 }
+                }
+              ],
+              "x": 12,
+              "y": 12
+            },
+            {
+              "name": "Card Value",
+              "type": "TEXT",
+              "content": "0 nm",
+              "fontSize": 20,
+              "fontWeight": 700,
+              "fontFamily": "JetBrains Mono",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": { "r": 0.2, "g": 0.8, "b": 0.2, "a": 1 }
+                }
+              ],
+              "x": 12,
+              "y": 32
+            }
+          ]
+        },
+        {
+          "name": "Time Card",
+          "type": "FRAME",
+          "width": 160,
+          "height": 80,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": { "r": 0.1, "g": 0.1, "b": 0.1, "a": 1 }
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": { "r": 0.2, "g": 0.2, "b": 0.2, "a": 1 },
+              "weight": 1
+            }
+          ],
+          "cornerRadius": 8,
+          "x": 192,
+          "y": 400,
+          "children": [
+            {
+              "name": "Card Title",
+              "type": "TEXT",
+              "content": "Flight Time",
+              "fontSize": 12,
+              "fontWeight": 500,
+              "fontFamily": "Inter",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": { "r": 0.6, "g": 0.6, "b": 0.6, "a": 1 }
+                }
+              ],
+              "x": 12,
+              "y": 12
+            },
+            {
+              "name": "Card Value",
+              "type": "TEXT",
+              "content": "0:00",
+              "fontSize": 20,
+              "fontWeight": 700,
+              "fontFamily": "JetBrains Mono",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": { "r": 0.2, "g": 0.8, "b": 0.2, "a": 1 }
+                }
+              ],
+              "x": 12,
+              "y": 32
+            }
+          ]
+        }
+      ]
+    },
+    
+    "mapPanel": {
+      "name": "Map Panel",
+      "description": "Interactive map panel for route visualization",
+      "figmaProperties": {
+        "width": "600px",
+        "height": "400px",
+        "fills": [
+          {
+            "type": "SOLID",
+            "color": { "r": 0.06, "g": 0.08, "b": 0.06, "a": 1 }
+          }
+        ],
+        "strokes": [
+          {
+            "type": "SOLID",
+            "color": { "r": 0.2, "g": 0.2, "b": 0.2, "a": 1 },
+            "weight": 1
+          }
+        ],
+        "cornerRadius": 12
+      },
+      "children": [
+        {
+          "name": "Map Title",
+          "type": "TEXT",
+          "content": "Route Map",
+          "fontSize": 20,
+          "fontWeight": 600,
+          "fontFamily": "Inter",
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": { "r": 0.9, "g": 0.9, "b": 0.9, "a": 1 }
+            }
+          ],
+          "x": 20,
+          "y": 20
+        },
+        {
+          "name": "Map Area",
+          "type": "FRAME",
+          "width": 560,
+          "height": 300,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": { "r": 0.04, "g": 0.06, "b": 0.04, "a": 1 }
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": { "r": 0.15, "g": 0.15, "b": 0.15, "a": 1 },
+              "weight": 1
+            }
+          ],
+          "cornerRadius": 8,
+          "x": 20,
+          "y": 60,
+          "children": [
+            {
+              "name": "Map Grid",
+              "type": "VECTOR",
+              "description": "Grid pattern for map background",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": { "r": 0.1, "g": 0.1, "b": 0.1, "a": 0.3 }
+                }
+              ]
+            },
+            {
+              "name": "Route Line",
+              "type": "VECTOR",
+              "description": "Route line connecting waypoints",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": { "r": 0.2, "g": 0.8, "b": 0.2, "a": 1 },
+                  "weight": 3
+                }
+              ]
+            },
+            {
+              "name": "Waypoint Markers",
+              "type": "FRAME",
+              "description": "Waypoint markers on the map"
+            }
+          ]
+        },
+        {
+          "name": "Map Controls",
+          "type": "FRAME",
+          "width": 60,
+          "height": 200,
+          "x": 520,
+          "y": 20,
+          "children": [
+            {
+              "name": "Zoom In",
+              "type": "FRAME",
+              "width": 40,
+              "height": 40,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": { "r": 0.1, "g": 0.1, "b": 0.1, "a": 0.8 }
+                }
+              ],
+              "cornerRadius": 6,
+              "x": 0,
+              "y": 0
+            },
+            {
+              "name": "Zoom Out",
+              "type": "FRAME",
+              "width": 40,
+              "height": 40,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": { "r": 0.1, "g": 0.1, "b": 0.1, "a": 0.8 }
+                }
+              ],
+              "cornerRadius": 6,
+              "x": 0,
+              "y": 50
+            },
+            {
+              "name": "Center",
+              "type": "FRAME",
+              "width": 40,
+              "height": 40,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": { "r": 0.1, "g": 0.1, "b": 0.1, "a": 0.8 }
+                }
+              ],
+              "cornerRadius": 6,
+              "x": 0,
+              "y": 100
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

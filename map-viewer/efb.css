@@ -1,0 +1,557 @@
+/* EFB - Electronic Flight Bag Styles */
+/* Aviation-inspired glass cockpit design */
+
+:root {
+    /* Aviation Color Palette */
+    --efb-bg-primary: #0a0a0a;
+    --efb-bg-secondary: #1a1a1a;
+    --efb-bg-panel: rgba(20, 20, 20, 0.95);
+    --efb-glass: rgba(255, 255, 255, 0.05);
+    --efb-border: rgba(0, 255, 0, 0.3);
+    --efb-border-active: rgba(0, 255, 0, 0.8);
+    --efb-text-primary: #00ff00;
+    --efb-text-secondary: #ffffff;
+    --efb-text-muted: #888888;
+    --efb-accent: #00ff00;
+    --efb-warning: #ffaa00;
+    --efb-error: #ff0000;
+    --efb-success: #00ff00;
+    
+    /* Typography */
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    --font-sans: 'Inter', 'Arial', sans-serif;
+    
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    
+    /* Border radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    background: var(--efb-bg-primary);
+    color: var(--efb-text-secondary);
+    overflow: hidden;
+    height: 100vh;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Main Container */
+.efb-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    position: relative;
+}
+
+.efb-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(0, 255, 0, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(0, 255, 0, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Header */
+.efb-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--efb-bg-panel);
+    border-bottom: 2px solid var(--efb-border);
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 10;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.aircraft-icon {
+    font-size: 24px;
+    color: var(--efb-accent);
+    filter: drop-shadow(0 0 8px var(--efb-accent));
+}
+
+.flight-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.flight-number {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--efb-text-primary);
+    letter-spacing: 2px;
+}
+
+.aircraft-type {
+    font-size: 12px;
+    color: var(--efb-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.header-center {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.system-status {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--efb-text-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--efb-accent);
+    box-shadow: 0 0 8px var(--efb-accent);
+    animation: pulse 2s infinite;
+}
+
+.status-indicator.active {
+    background: var(--efb-success);
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-family: var(--font-mono);
+}
+
+.time-display {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--efb-text-primary);
+    letter-spacing: 2px;
+}
+
+.date-display {
+    font-size: 12px;
+    color: var(--efb-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Main Content */
+.efb-main {
+    display: grid;
+    grid-template-columns: 300px 1fr 300px;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Panels */
+.panel {
+    background: var(--efb-bg-panel);
+    border: 1px solid var(--efb-border);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    position: relative;
+}
+
+.panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--efb-glass);
+    pointer-events: none;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--efb-border);
+    background: rgba(0, 255, 0, 0.05);
+    position: relative;
+    z-index: 2;
+}
+
+.panel-header h2 {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--efb-text-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.panel-indicator {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--efb-accent);
+    box-shadow: 0 0 6px var(--efb-accent);
+}
+
+.panel-controls {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.control-btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: transparent;
+    border: 1px solid var(--efb-border);
+    border-radius: var(--radius-sm);
+    color: var(--efb-text-secondary);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.control-btn:hover {
+    background: var(--efb-accent);
+    color: var(--efb-bg-primary);
+    box-shadow: 0 0 8px var(--efb-accent);
+}
+
+/* Flight Data Panel */
+.flight-data-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.data-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    flex: 1;
+}
+
+.data-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--spacing-md);
+    background: rgba(0, 255, 0, 0.02);
+    border: 1px solid var(--efb-border);
+    border-radius: var(--radius-md);
+    position: relative;
+}
+
+.data-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--efb-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.data-value {
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--efb-text-primary);
+    line-height: 1;
+    margin-bottom: var(--spacing-xs);
+}
+
+.data-unit {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--efb-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Map Panel */
+.map-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.map-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.efb-map {
+    width: 100%;
+    height: 100%;
+    filter: contrast(1.3) brightness(0.9) saturate(0.8);
+}
+
+.map-overlay {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    background: var(--efb-bg-panel);
+    border: 1px solid var(--efb-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm);
+    backdrop-filter: blur(10px);
+}
+
+.map-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+    font-family: var(--font-mono);
+    font-size: 10px;
+}
+
+.info-label {
+    color: var(--efb-text-muted);
+    text-transform: uppercase;
+}
+
+.info-value {
+    color: var(--efb-text-primary);
+    font-weight: 600;
+}
+
+/* Route Panel */
+.route-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.route-list {
+    flex: 1;
+    padding: var(--spacing-md);
+    overflow-y: auto;
+}
+
+.no-route {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: var(--efb-text-muted);
+}
+
+.no-route-icon {
+    font-size: 48px;
+    margin-bottom: var(--spacing-md);
+    opacity: 0.5;
+}
+
+.no-route-text {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.no-route-subtext {
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+/* Footer */
+.efb-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--efb-bg-panel);
+    border-top: 2px solid var(--efb-border);
+    backdrop-filter: blur(10px);
+}
+
+.control-section {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: center;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.control-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--efb-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.control-input {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--efb-bg-secondary);
+    border: 1px solid var(--efb-border);
+    border-radius: var(--radius-sm);
+    color: var(--efb-text-primary);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    width: 120px;
+}
+
+.control-input:focus {
+    outline: none;
+    border-color: var(--efb-border-active);
+    box-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
+}
+
+.primary-btn, .secondary-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: 1px solid var(--efb-border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 100px;
+}
+
+.primary-btn {
+    background: var(--efb-accent);
+    color: var(--efb-bg-primary);
+}
+
+.primary-btn:hover {
+    background: var(--efb-success);
+    box-shadow: 0 0 12px var(--efb-accent);
+}
+
+.secondary-btn {
+    background: transparent;
+    color: var(--efb-text-secondary);
+}
+
+.secondary-btn:hover {
+    background: var(--efb-accent);
+    color: var(--efb-bg-primary);
+    box-shadow: 0 0 8px var(--efb-accent);
+}
+
+.status-section {
+    display: flex;
+    gap: var(--spacing-lg);
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--efb-text-muted);
+}
+
+.status-dot.active {
+    background: var(--efb-success);
+    box-shadow: 0 0 8px var(--efb-success);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--efb-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--efb-border);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--efb-border-active);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .efb-main {
+        grid-template-columns: 250px 1fr 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .efb-main {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+    
+    .efb-footer {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .control-section {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}

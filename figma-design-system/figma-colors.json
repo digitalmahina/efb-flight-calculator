@@ -1,0 +1,187 @@
+{
+  "name": "EFB Color Palette",
+  "description": "Цветовая палитра для авиационной дизайн-системы",
+  "colors": [
+    {
+      "name": "Primary Green",
+      "value": "#00FF00",
+      "description": "Основной зеленый цвет для активных элементов",
+      "usage": "Кнопки, индикаторы, акценты"
+    },
+    {
+      "name": "Primary Green 80%",
+      "value": "#33FF33",
+      "description": "Светлый оттенок основного зеленого",
+      "usage": "Hover состояния, подсветка"
+    },
+    {
+      "name": "Primary Green 60%",
+      "value": "#66FF66",
+      "description": "Средний оттенок основного зеленого",
+      "usage": "Неактивные элементы"
+    },
+    {
+      "name": "Primary Green 40%",
+      "value": "#99FF99",
+      "description": "Светлый оттенок для фонов",
+      "usage": "Фоновые акценты"
+    },
+    {
+      "name": "Primary Green 20%",
+      "value": "#CCFFCC",
+      "description": "Очень светлый оттенок",
+      "usage": "Тонкие акценты"
+    },
+    {
+      "name": "Background Dark",
+      "value": "#0A0A0A",
+      "description": "Основной темный фон",
+      "usage": "Основной фон приложения"
+    },
+    {
+      "name": "Panel Background",
+      "value": "#141414",
+      "description": "Фон панелей (95% непрозрачности)",
+      "usage": "Фон панелей и карточек"
+    },
+    {
+      "name": "Glass Background",
+      "value": "rgba(255, 255, 255, 0.05)",
+      "description": "Стеклянный эффект",
+      "usage": "Полупрозрачные элементы"
+    },
+    {
+      "name": "Text Primary",
+      "value": "#00FF00",
+      "description": "Основной текст",
+      "usage": "Заголовки, важная информация"
+    },
+    {
+      "name": "Text Secondary",
+      "value": "#FFFFFF",
+      "description": "Вторичный текст",
+      "usage": "Обычный текст"
+    },
+    {
+      "name": "Text Muted",
+      "value": "#888888",
+      "description": "Приглушенный текст",
+      "usage": "Подписи, второстепенная информация"
+    },
+    {
+      "name": "Border Default",
+      "value": "rgba(0, 255, 0, 0.3)",
+      "description": "Стандартная граница",
+      "usage": "Границы элементов"
+    },
+    {
+      "name": "Border Active",
+      "value": "rgba(0, 255, 0, 0.8)",
+      "description": "Активная граница",
+      "usage": "Фокус, активные состояния"
+    },
+    {
+      "name": "Warning",
+      "value": "#FFAA00",
+      "description": "Предупреждение",
+      "usage": "Предупреждения, внимание"
+    },
+    {
+      "name": "Error",
+      "value": "#FF0000",
+      "description": "Ошибка",
+      "usage": "Ошибки, критические состояния"
+    },
+    {
+      "name": "Success",
+      "value": "#00FF00",
+      "description": "Успех",
+      "usage": "Успешные операции"
+    },
+    {
+      "name": "Info",
+      "value": "#00AAFF",
+      "description": "Информация",
+      "usage": "Информационные сообщения"
+    }
+  ],
+  "gradients": [
+    {
+      "name": "Primary Gradient",
+      "type": "linear",
+      "angle": "135deg",
+      "stops": [
+        {
+          "color": "#00FF00",
+          "position": "0%"
+        },
+        {
+          "color": "#00CC00",
+          "position": "100%"
+        }
+      ],
+      "usage": "Кнопки, акценты"
+    },
+    {
+      "name": "Background Gradient",
+      "type": "linear",
+      "angle": "135deg",
+      "stops": [
+        {
+          "color": "#0A0A0A",
+          "position": "0%"
+        },
+        {
+          "color": "#1A1A1A",
+          "position": "100%"
+        }
+      ],
+      "usage": "Фоновые градиенты"
+    },
+    {
+      "name": "Glass Gradient",
+      "type": "linear",
+      "angle": "135deg",
+      "stops": [
+        {
+          "color": "rgba(0, 255, 0, 0.1)",
+          "position": "0%"
+        },
+        {
+          "color": "transparent",
+          "position": "50%"
+        }
+      ],
+      "usage": "Стеклянные эффекты"
+    }
+  ],
+  "effects": [
+    {
+      "name": "Glow Effect",
+      "type": "drop-shadow",
+      "x": "0",
+      "y": "0",
+      "blur": "20px",
+      "color": "rgba(0, 255, 0, 0.3)",
+      "usage": "Свечение элементов"
+    },
+    {
+      "name": "Panel Shadow",
+      "type": "drop-shadow",
+      "x": "0",
+      "y": "8px",
+      "blur": "32px",
+      "color": "rgba(0, 0, 0, 0.3)",
+      "usage": "Тень панелей"
+    },
+    {
+      "name": "Button Shadow",
+      "type": "drop-shadow",
+      "x": "0",
+      "y": "4px",
+      "blur": "16px",
+      "color": "rgba(0, 255, 0, 0.2)",
+      "usage": "Тень кнопок"
+    }
+  ]
+}

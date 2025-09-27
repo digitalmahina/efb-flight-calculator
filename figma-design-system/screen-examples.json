@@ -1,0 +1,474 @@
+{
+  "name": "EFB Screen Examples",
+  "description": "Примеры экранов для EFB Flight Calculator",
+  "screens": [
+    {
+      "name": "Desktop Main Screen",
+      "type": "desktop",
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "layout": {
+        "type": "grid",
+        "columns": "300px 1fr 300px 300px",
+        "rows": "80px 1fr 120px",
+        "gaps": "16px"
+      },
+      "components": [
+        {
+          "name": "Header",
+          "position": "top",
+          "height": 80,
+          "elements": [
+            {
+              "type": "title",
+              "text": "EFB FLIGHT CALCULATOR",
+              "style": "Header Title"
+            },
+            {
+              "type": "status-indicators",
+              "indicators": ["GPS", "NAV", "CALC", "WX"]
+            },
+            {
+              "type": "time-display",
+              "format": "HH:MM:SS"
+            }
+          ]
+        },
+        {
+          "name": "Flight Data Panel",
+          "position": "left",
+          "width": 300,
+          "elements": [
+            {
+              "type": "data-card",
+              "label": "CRUISE SPEED",
+              "value": "200",
+              "unit": "KM/H"
+            },
+            {
+              "type": "data-card",
+              "label": "FUEL FLOW",
+              "value": "600",
+              "unit": "KG/H"
+            },
+            {
+              "type": "data-card",
+              "label": "TOTAL DISTANCE",
+              "value": "1,250",
+              "unit": "KM"
+            },
+            {
+              "type": "data-card",
+              "label": "FLIGHT TIME",
+              "value": "6:15",
+              "unit": "H:MM"
+            },
+            {
+              "type": "data-card",
+              "label": "TOTAL FUEL",
+              "value": "3,750",
+              "unit": "KG"
+            },
+            {
+              "type": "data-card",
+              "label": "WAYPOINTS",
+              "value": "12",
+              "unit": "PTS"
+            }
+          ]
+        },
+        {
+          "name": "Map Panel",
+          "position": "center",
+          "elements": [
+            {
+              "type": "map-placeholder",
+              "text": "NAVIGATION MAP",
+              "icon": "🗺️"
+            },
+            {
+              "type": "map-controls",
+              "elements": ["zoom-in", "zoom-out", "range-display"]
+            }
+          ]
+        },
+        {
+          "name": "Route Panel",
+          "position": "right",
+          "width": 300,
+          "elements": [
+            {
+              "type": "route-list",
+              "header": ["#", "WAYPOINT", "COORDS"],
+              "rows": [
+                ["1", "DEPARTURE", "55.7558, 37.6176"],
+                ["2", "WAYPOINT 1", "55.8000, 37.7000"],
+                ["3", "WAYPOINT 2", "55.8500, 37.8000"],
+                ["4", "ARRIVAL", "55.9000, 37.9000"]
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Weather Panel",
+          "position": "right",
+          "width": 300,
+          "elements": [
+            {
+              "type": "weather-card",
+              "title": "CURRENT CONDITIONS",
+              "elements": [
+                {
+                  "type": "temperature",
+                  "value": "15",
+                  "unit": "°C"
+                },
+                {
+                  "type": "weather-details",
+                  "items": [
+                    {"label": "WIND", "value": "12", "unit": "KT"},
+                    {"label": "VIS", "value": "10", "unit": "SM"},
+                    {"label": "CLOUDS", "value": "3000", "unit": "FT"}
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "weather-card",
+              "title": "FLIGHT CONDITIONS",
+              "elements": [
+                {
+                  "type": "condition-rating",
+                  "value": "GOOD"
+                },
+                {
+                  "type": "risk-level",
+                  "value": "LOW"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Footer",
+          "position": "bottom",
+          "height": 120,
+          "elements": [
+            {
+              "type": "input-group",
+              "label": "CRUISE SPEED",
+              "input": "200",
+              "unit": "KM/H"
+            },
+            {
+              "type": "input-group",
+              "label": "FUEL FLOW",
+              "input": "600",
+              "unit": "KG/H"
+            },
+            {
+              "type": "button",
+              "variant": "primary",
+              "text": "LOAD GPX",
+              "icon": "📁"
+            },
+            {
+              "type": "button",
+              "variant": "secondary",
+              "text": "CALCULATE",
+              "icon": "🚀"
+            },
+            {
+              "type": "button",
+              "variant": "danger",
+              "text": "CLEAR",
+              "icon": "🗑️"
+            },
+            {
+              "type": "button",
+              "variant": "secondary",
+              "text": "WEATHER",
+              "icon": "🌤️"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mobile Main Screen",
+      "type": "mobile",
+      "dimensions": {
+        "width": 375,
+        "height": 812
+      },
+      "layout": {
+        "type": "column",
+        "rows": "60px 1fr 80px",
+        "gaps": "8px"
+      },
+      "components": [
+        {
+          "name": "Header",
+          "position": "top",
+          "height": 60,
+          "elements": [
+            {
+              "type": "title",
+              "text": "EFB",
+              "style": "Header Title",
+              "size": "small"
+            },
+            {
+              "type": "status-indicators",
+              "indicators": ["GPS", "NAV", "CALC"],
+              "compact": true
+            },
+            {
+              "type": "time-display",
+              "format": "HH:MM",
+              "size": "small"
+            }
+          ]
+        },
+        {
+          "name": "Main Content",
+          "position": "center",
+          "elements": [
+            {
+              "type": "data-grid",
+              "columns": 2,
+              "elements": [
+                {
+                  "type": "data-card",
+                  "label": "DISTANCE",
+                  "value": "1,250",
+                  "unit": "KM"
+                },
+                {
+                  "type": "data-card",
+                  "label": "TIME",
+                  "value": "6:15",
+                  "unit": "H:MM"
+                },
+                {
+                  "type": "data-card",
+                  "label": "FUEL",
+                  "value": "3,750",
+                  "unit": "KG"
+                },
+                {
+                  "type": "data-card",
+                  "label": "POINTS",
+                  "value": "12",
+                  "unit": "PTS"
+                }
+              ]
+            },
+            {
+              "type": "map-placeholder",
+              "text": "MAP",
+              "height": 200
+            },
+            {
+              "type": "route-list",
+              "compact": true,
+              "maxItems": 3
+            }
+          ]
+        },
+        {
+          "name": "Footer",
+          "position": "bottom",
+          "height": 80,
+          "elements": [
+            {
+              "type": "button-row",
+              "buttons": [
+                {
+                  "type": "button",
+                  "variant": "primary",
+                  "text": "LOAD",
+                  "icon": "📁"
+                },
+                {
+                  "type": "button",
+                  "variant": "secondary",
+                  "text": "CALC",
+                  "icon": "🧮"
+                },
+                {
+                  "type": "button",
+                  "variant": "secondary",
+                  "text": "WX",
+                  "icon": "🌤️"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Loading Screen",
+      "type": "overlay",
+      "dimensions": {
+        "width": 400,
+        "height": 200
+      },
+      "background": "rgba(0, 0, 0, 0.8)",
+      "components": [
+        {
+          "name": "Loading Panel",
+          "type": "panel",
+          "elements": [
+            {
+              "type": "spinner",
+              "size": 40,
+              "color": "#00FF00"
+            },
+            {
+              "type": "text",
+              "content": "Processing route...",
+              "style": "Body Medium"
+            },
+            {
+              "type": "progress-bar",
+              "value": 75,
+              "max": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Error Screen",
+      "type": "overlay",
+      "dimensions": {
+        "width": 400,
+        "height": 250
+      },
+      "background": "rgba(0, 0, 0, 0.8)",
+      "components": [
+        {
+          "name": "Error Panel",
+          "type": "panel",
+          "variant": "error",
+          "elements": [
+            {
+              "type": "icon",
+              "name": "error",
+              "size": 48,
+              "color": "#FF0000"
+            },
+            {
+              "type": "text",
+              "content": "Error",
+              "style": "Panel Title",
+              "color": "#FF0000"
+            },
+            {
+              "type": "text",
+              "content": "Failed to load GPX file. Please check the file format and try again.",
+              "style": "Body Medium"
+            },
+            {
+              "type": "button",
+              "variant": "primary",
+              "text": "OK"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Success Screen",
+      "type": "overlay",
+      "dimensions": {
+        "width": 400,
+        "height": 200
+      },
+      "background": "rgba(0, 0, 0, 0.8)",
+      "components": [
+        {
+          "name": "Success Panel",
+          "type": "panel",
+          "variant": "success",
+          "elements": [
+            {
+              "type": "icon",
+              "name": "success",
+              "size": 48,
+              "color": "#00FF00"
+            },
+            {
+              "type": "text",
+              "content": "Success",
+              "style": "Panel Title",
+              "color": "#00FF00"
+            },
+            {
+              "type": "text",
+              "content": "Route calculated successfully!",
+              "style": "Body Medium"
+            },
+            {
+              "type": "button",
+              "variant": "primary",
+              "text": "OK"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "states": [
+    {
+      "name": "Default State",
+      "description": "Обычное состояние интерфейса"
+    },
+    {
+      "name": "Loading State",
+      "description": "Состояние загрузки"
+    },
+    {
+      "name": "Error State",
+      "description": "Состояние ошибки"
+    },
+    {
+      "name": "Success State",
+      "description": "Состояние успеха"
+    },
+    {
+      "name": "Empty State",
+      "description": "Пустое состояние (нет данных)"
+    }
+  ],
+  "interactions": [
+    {
+      "name": "Button Hover",
+      "trigger": "hover",
+      "action": "change-color",
+      "properties": ["background", "border-color", "box-shadow"]
+    },
+    {
+      "name": "Button Click",
+      "trigger": "click",
+      "action": "transform",
+      "properties": ["translateY(1px)"]
+    },
+    {
+      "name": "Panel Hover",
+      "trigger": "hover",
+      "action": "change-border",
+      "properties": ["border-color", "box-shadow"]
+    },
+    {
+      "name": "Input Focus",
+      "trigger": "focus",
+      "action": "change-border",
+      "properties": ["border-color", "box-shadow"]
+    }
+  ]
+}

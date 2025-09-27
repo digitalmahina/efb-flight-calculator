@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧮 Модуль CALCULATIONS - Пример использования</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #3498db;
+        }
+        
+        .section h2 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #34495e;
+        }
+        
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        input:focus, select:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #2980b9;
+        }
+        
+        .result {
+            background: #e8f5e8;
+            border: 2px solid #27ae60;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .error {
+            background: #fdf2f2;
+            border: 2px solid #e74c3c;
+            color: #c0392b;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .waypoint {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .waypoint h4 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        
+        .coordinates {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .status {
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .status.loading {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧮 Модуль CALCULATIONS</h1>
+        <p style="text-align: center; font-size: 1.2em; color: #7f8c8d;">
+            Демонстрация возможностей модуля расчета полета
+        </p>
+        
+        <div id="status" class="status loading">
+            Инициализация модуля...
+        </div>
+        
+        <div class="grid">
+            <!-- Базовые расчеты -->
+            <div class="section">
+                <h2>📏 Базовые расчеты</h2>
+                
+                <div class="input-group">
+                    <label>Точка A (широта, долгота):</label>
+                    <div class="coordinates">
+                        <input type="number" id="lat1" placeholder="55.7558" step="0.0001">
+                        <input type="number" id="lon1" placeholder="37.6176" step="0.0001">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Точка B (широта, долгота):</label>
+                    <div class="coordinates">
+                        <input type="number" id="lat2" placeholder="59.9311" step="0.0001">
+                        <input type="number" id="lon2" placeholder="30.3609" step="0.0001">
+                    </div>
+                </div>
+                
+                <button onclick="calculateDistance()">Рассчитать расстояние</button>
+                <div id="distanceResult" class="result" style="display: none;"></div>
+            </div>
+            
+            <!-- Параметры полета -->
+            <div class="section">
+                <h2>✈️ Параметры полета</h2>
+                
+                <div class="input-group">
+                    <label>Крейсерская скорость (км/ч):</label>
+                    <input type="number" id="cruiseSpeed" value="200" min="1" max="1000">
+                </div>
+                
+                <div class="input-group">
+                    <label>Расход топлива (кг/ч):</label>
+                    <input type="number" id="fuelFlow" value="600" min="1" max="5000">
+                </div>
+                
+                <div class="input-group">
+                    <label>Резерв топлива (%):</label>
+                    <input type="number" id="reserveFuel" value="10" min="0" max="100">
+                </div>
+                
+                <button onclick="calculateFlightParams()">Рассчитать параметры</button>
+                <div id="paramsResult" class="result" style="display: none;"></div>
+            </div>
+        </div>
+        
+        <!-- Маршрут -->
+        <div class="section">
+            <h2>🛣️ Расчет маршрута</h2>
+            
+            <div id="waypoints">
+                <div class="waypoint">
+                    <h4>Точка 1</h4>
+                    <div class="coordinates">
+                        <input type="number" placeholder="Широта" step="0.0001">
+                        <input type="number" placeholder="Долгота" step="0.0001">
+                    </div>
+                    <input type="text" placeholder="Название точки" style="margin-top: 10px;">
+                </div>
+            </div>
+            
+            <button onclick="addWaypoint()">Добавить точку</button>
+            <button onclick="calculateRoute()">Рассчитать маршрут</button>
+            
+            <div id="routeResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <!-- Результаты -->
+        <div class="section">
+            <h2>📊 Результаты расчетов</h2>
+            <div id="results" class="result">
+                Результаты появятся здесь после выполнения расчетов...
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import Calculations from './calculations.js';
+        
+        let calculationsModule = null;
+        
+        // Инициализация модуля
+        async function initModule() {
+            try {
+                calculationsModule = Calculations;
+                await calculationsModule.init();
+                
+                document.getElementById('status').className = 'status success';
+                document.getElementById('status').textContent = '✅ Модуль инициализирован успешно';
+                
+                // Заполнение примерами
+                document.getElementById('lat1').value = 55.7558;
+                document.getElementById('lon1').value = 37.6176;
+                document.getElementById('lat2').value = 59.9311;
+                document.getElementById('lon2').value = 30.3609;
+                
+            } catch (error) {
+                document.getElementById('status').className = 'status error';
+                document.getElementById('status').textContent = '❌ Ошибка инициализации: ' + error.message;
+                console.error('Ошибка инициализации:', error);
+            }
+        }
+        
+        // Расчет расстояния
+        window.calculateDistance = function() {
+            try {
+                const lat1 = parseFloat(document.getElementById('lat1').value);
+                const lon1 = parseFloat(document.getElementById('lon1').value);
+                const lat2 = parseFloat(document.getElementById('lat2').value);
+                const lon2 = parseFloat(document.getElementById('lon2').value);
+                
+                if (isNaN(lat1) || isNaN(lon1) || isNaN(lat2) || isNaN(lon2)) {
+                    throw new Error('Введите корректные координаты');
+                }
+                
+                const distance = calculationsModule.calculateDistance(lat1, lon1, lat2, lon2);
+                const result = `Расстояние: ${distance.toFixed(2)} км`;
+                
+                document.getElementById('distanceResult').textContent = result;
+                document.getElementById('distanceResult').style.display = 'block';
+                document.getElementById('distanceResult').className = 'result';
+                
+            } catch (error) {
+                document.getElementById('distanceResult').textContent = 'Ошибка: ' + error.message;
+                document.getElementById('distanceResult').style.display = 'block';
+                document.getElementById('distanceResult').className = 'result error';
+            }
+        };
+        
+        // Расчет параметров полета
+        window.calculateFlightParams = function() {
+            try {
+                const distance = 635; // Примерное расстояние Москва-СПб
+                const speed = parseFloat(document.getElementById('cruiseSpeed').value);
+                const fuelFlow = parseFloat(document.getElementById('fuelFlow').value);
+                const reservePercent = parseFloat(document.getElementById('reserveFuel').value);
+                
+                const time = calculationsModule.calculateTime(distance, speed);
+                const baseFuel = calculationsModule.calculateFuel(time, fuelFlow);
+                const fuelWithReserve = calculationsModule.fuel.calculateFuelWithReserve(baseFuel, reservePercent);
+                
+                const result = `
+Расстояние: ${distance} км
+Время полета: ${calculationsModule.formatTime(time)}
+Базовое топливо: ${baseFuel.toFixed(1)} кг
+Резерв: ${fuelWithReserve.reserveFuel.toFixed(1)} кг
+Общее топливо: ${fuelWithReserve.totalFuel.toFixed(1)} кг
+                `.trim();
+                
+                document.getElementById('paramsResult').textContent = result;
+                document.getElementById('paramsResult').style.display = 'block';
+                document.getElementById('paramsResult').className = 'result';
+                
+            } catch (error) {
+                document.getElementById('paramsResult').textContent = 'Ошибка: ' + error.message;
+                document.getElementById('paramsResult').style.display = 'block';
+                document.getElementById('paramsResult').className = 'result error';
+            }
+        };
+        
+        // Добавление точки маршрута
+        window.addWaypoint = function() {
+            const waypointsContainer = document.getElementById('waypoints');
+            const waypointCount = waypointsContainer.children.length + 1;
+            
+            const waypointDiv = document.createElement('div');
+            waypointDiv.className = 'waypoint';
+            waypointDiv.innerHTML = `
+                <h4>Точка ${waypointCount}</h4>
+                <div class="coordinates">
+                    <input type="number" placeholder="Широта" step="0.0001">
+                    <input type="number" placeholder="Долгота" step="0.0001">
+                </div>
+                <input type="text" placeholder="Название точки" style="margin-top: 10px;">
+            `;
+            
+            waypointsContainer.appendChild(waypointDiv);
+        };
+        
+        // Расчет маршрута
+        window.calculateRoute = function() {
+            try {
+                const waypoints = [];
+                const waypointElements = document.querySelectorAll('.waypoint');
+                
+                waypointElements.forEach((element, index) => {
+                    const inputs = element.querySelectorAll('input');
+                    const lat = parseFloat(inputs[0].value);
+                    const lon = parseFloat(inputs[1].value);
+                    const name = inputs[2].value || `WPT${index + 1}`;
+                    
+                    if (!isNaN(lat) && !isNaN(lon)) {
+                        waypoints.push({ lat, lon, name });
+                    }
+                });
+                
+                if (waypoints.length < 2) {
+                    throw new Error('Добавьте минимум 2 точки маршрута');
+                }
+                
+                const params = {
+                    cruiseSpeed: parseFloat(document.getElementById('cruiseSpeed').value),
+                    fuelFlow: parseFloat(document.getElementById('fuelFlow').value),
+                    reserveFuel: parseFloat(document.getElementById('reserveFuel').value)
+                };
+                
+                const result = calculationsModule.calculateRoute(waypoints, params);
+                
+                let resultText = `
+МАРШРУТ РАСЧЕТАН УСПЕШНО
+
+Общие показатели:
+• Общее расстояние: ${result.formattedDistance}
+• Общее время: ${result.formattedTime}
+• Общий расход топлива: ${result.formattedFuel}
+
+Детали по сегментам:
+`;
+                
+                result.segments.forEach((segment, index) => {
+                    resultText += `
+${index + 1}. ${segment.from} → ${segment.to}
+   Расстояние: ${segment.distance} км
+   Время: ${segment.formattedTime}
+   Топливо: ${segment.fuel} кг
+   Курс: ${segment.bearing}°
+`;
+                });
+                
+                resultText += `
+Статистика:
+• Эффективность маршрута: ${result.statistics.routeEfficiency}%
+• Топливная эффективность: ${result.statistics.fuelEfficiency} кг/км
+• Средняя скорость: ${result.statistics.averageSpeed} км/ч
+
+Безопасность: ${result.safety.isSafe ? '✅ Маршрут безопасен' : '⚠️ Требует внимания'}
+                `;
+                
+                document.getElementById('routeResult').textContent = resultText;
+                document.getElementById('routeResult').style.display = 'block';
+                document.getElementById('routeResult').className = 'result';
+                
+                // Обновление общих результатов
+                document.getElementById('results').textContent = resultText;
+                
+            } catch (error) {
+                document.getElementById('routeResult').textContent = 'Ошибка: ' + error.message;
+                document.getElementById('routeResult').style.display = 'block';
+                document.getElementById('routeResult').className = 'result error';
+            }
+        };
+        
+        // Инициализация при загрузке страницы
+        initModule();
+    </script>
+</body>
+</html>

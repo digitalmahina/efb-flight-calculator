@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Air Navigation Pro for iOS and Android" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+    <metadata>
+        <extensions>
+            <userDefinedSpeed>56.588889</userDefinedSpeed>
+        </extensions>
+    </metadata>
+    <wpt lat="68.8057832784194" lon="32.8047333314232">
+        <ele>76</ele>
+        <name>XLMN</name>
+        <desc>Мурмаши</desc>
+        <type>Airport</type>
+        <extensions>
+            <planned_altitude_after>487.68</planned_altitude_after>
+        </extensions>
+    </wpt>
+    <wpt lat="68.7817829468141" lon="32.7512330273875">
+        <ele>81.3815994262695</ele>
+        <name>ULMM</name>
+        <desc>Мурманск</desc>
+        <type>Airport</type>
+        <extensions/>
+    </wpt>
+    <wpt lat="68.8057832784194" lon="32.8047333314232">
+        <ele>76</ele>
+        <name>XLMN</name>
+        <desc>Мурмаши</desc>
+        <type>Airport</type>
+        <extensions/>
+    </wpt>
+    <wpt lat="69.9388888888889" lon="32.0658055555555">
+        <ele>116</ele>
+        <name>М. Кекурский</name>
+        <desc>Мурмаши</desc>
+        <type>Waypoint</type>
+        <extensions>
+            <planned_altitude>518.16</planned_altitude>
+        </extensions>
+    </wpt>
+    <wpt lat="69.8244722222222" lon="31.7681111111111">
+        <ele>207</ele>
+        <name>Два брата</name>
+        <desc>Точки пользователя 746</desc>
+        <type>Waypoint</type>
+        <extensions>
+            <planned_altitude>731.52</planned_altitude>
+        </extensions>
+    </wpt>
+    <wpt lat="69.5355555555555" lon="31.9808333333333">
+        <ele>85</ele>
+        <name>Титовка</name>
+        <desc>Точки пользователя 6</desc>
+        <type>Waypoint</type>
+    </wpt>
+    <wpt lat="68.7817829468141" lon="32.7512330273875">
+        <ele>81.3815994262695</ele>
+        <name>ULMM</name>
+        <desc>Мурманск</desc>
+        <type>Airport</type>
+        <extensions/>
+    </wpt>
+    <wpt lat="68.8057832784194" lon="32.8047333314232">
+        <ele>76</ele>
+        <name>XLMN</name>
+        <desc>Мурмаши</desc>
+        <type>Airport</type>
+        <extensions>
+            <planned_altitude_after>792.48</planned_altitude_after>
+            <planned_altitude>792.48</planned_altitude>
+        </extensions>
+    </wpt>
+    <wpt lat="69.9388888888889" lon="32.0658055555555">
+        <ele>116</ele>
+        <name>М. Кекурский</name>
+        <desc>Мурмаши</desc>
+        <type>Waypoint</type>
+        <extensions>
+            <planned_altitude>518.16</planned_altitude>
+        </extensions>
+    </wpt>
+    <wpt lat="69.8244722222222" lon="31.7681111111111">
+        <ele>207</ele>
+        <name>Два брата</name>
+        <desc>Точки пользователя 746</desc>
+        <type>Waypoint</type>
+        <extensions>
+            <planned_altitude>731.52</planned_altitude>
+        </extensions>
+    </wpt>
+    <wpt lat="69.5355555555555" lon="31.9808333333333">
+        <ele>85</ele>
+        <name>Титовка</name>
+        <desc>Точки пользователя 6</desc>
+        <type>Waypoint</type>
+        <extensions>
+            <planned_altitude>731.52</planned_altitude>
+        </extensions>
+    </wpt>
+    <wpt lat="68.8057832784194" lon="32.8047333314232">
+        <ele>76</ele>
+        <name>XLMN</name>
+        <desc>Мурмаши</desc>
+        <type>Airport</type>
+        <extensions>
+            <planned_altitude>400</planned_altitude>
+        </extensions>
+    </wpt>
+    <wpt lat="68.7817829468141" lon="32.7512330273875">
+        <ele>81.3815994262695</ele>
+        <name>ULMM</name>
+        <desc>Мурманск</desc>
+        <type>Airport</type>
+        <extensions>
+            <planned_altitude>487.68</planned_altitude>
+        </extensions>
+    </wpt>
+    <rte>
+        <name>Route 202509051159</name>
+        <rtept lat="68.8057832784194" lon="32.8047333314232">
+            <ele>76</ele>
+            <name>XLMN</name>
+            <desc>Мурмаши</desc>
+            <type>Airport</type>
+            <extensions>
+                <planned_altitude_after>487.68</planned_altitude_after>
+            </extensions>
+        </rtept>
+        <rtept lat="68.7817829468141" lon="32.7512330273875">
+            <ele>81.3815994262695</ele>
+            <name>ULMM</name>
+            <desc>Мурманск</desc>
+            <type>Airport</type>
+            <extensions/>
+        </rtept>
+        <rtept lat="68.8057832784194" lon="32.8047333314232">
+            <ele>76</ele>
+            <name>XLMN</name>
+            <desc>Мурмаши</desc>
+            <type>Airport</type>
+            <extensions/>
+        </rtept>
+        <rtept lat="69.9388888888889" lon="32.0658055555555">
+            <ele>116</ele>
+            <name>М. Кекурский</name>
+            <desc>Мурмаши</desc>
+            <type>Waypoint</type>
+            <extensions>
+                <planned_altitude>518.16</planned_altitude>
+            </extensions>
+        </rtept>
+        <rtept lat="69.8244722222222" lon="31.7681111111111">
+            <ele>207</ele>
+            <name>Два брата</name>
+            <desc>Точки пользователя 746</desc>
+            <type>Waypoint</type>
+            <extensions>
+                <planned_altitude>731.52</planned_altitude>
+            </extensions>
+        </rtept>
+        <rtept lat="69.5355555555555" lon="31.9808333333333">
+            <ele>85</ele>
+            <name>Титовка</name>
+            <desc>Точки пользователя 6</desc>
+            <type>Waypoint</type>
+        </rtept>
+        <rtept lat="68.7817829468141" lon="32.7512330273875">
+            <ele>81.3815994262695</ele>
+            <name>ULMM</name>
+            <desc>Мурманск</desc>
+            <type>Airport</type>
+            <extensions/>
+        </rtept>
+        <rtept lat="68.8057832784194" lon="32.8047333314232">
+            <ele>76</ele>
+            <name>XLMN</name>
+            <desc>Мурмаши</desc>
+            <type>Airport</type>
+            <extensions>
+                <planned_altitude_after>792.48</planned_altitude_after>
+                <planned_altitude>792.48</planned_altitude>
+            </extensions>
+        </rtept>
+        <rtept lat="69.9388888888889" lon="32.0658055555555">
+            <ele>116</ele>
+            <name>М. Кекурский</name>
+            <desc>Мурмаши</desc>
+            <type>Waypoint</type>
+            <extensions>
+                <planned_altitude>518.16</planned_altitude>
+            </extensions>
+        </rtept>
+        <rtept lat="69.8244722222222" lon="31.7681111111111">
+            <ele>207</ele>
+            <name>Два брата</name>
+            <desc>Точки пользователя 746</desc>
+            <type>Waypoint</type>
+            <extensions>
+                <planned_altitude>731.52</planned_altitude>
+            </extensions>
+        </rtept>
+        <rtept lat="69.5355555555555" lon="31.9808333333333">
+            <ele>85</ele>
+            <name>Титовка</name>
+            <desc>Точки пользователя 6</desc>
+            <type>Waypoint</type>
+            <extensions>
+                <planned_altitude>731.52</planned_altitude>
+            </extensions>
+        </rtept>
+        <rtept lat="68.8057832784194" lon="32.8047333314232">
+            <ele>76</ele>
+            <name>XLMN</name>
+            <desc>Мурмаши</desc>
+            <type>Airport</type>
+            <extensions>
+                <planned_altitude>400</planned_altitude>
+            </extensions>
+        </rtept>
+        <rtept lat="68.7817829468141" lon="32.7512330273875">
+            <ele>81.3815994262695</ele>
+            <name>ULMM</name>
+            <desc>Мурманск</desc>
+            <type>Airport</type>
+            <extensions>
+                <planned_altitude>487.68</planned_altitude>
+            </extensions>
+        </rtept>
+    </rte>
+</gpx>

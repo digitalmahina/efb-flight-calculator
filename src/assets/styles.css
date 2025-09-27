@@ -1,0 +1,767 @@
+/**
+ * EFB Flight Calculator - Main Styles
+ * Версия: 2.0.0 (Refactored)
+ * Консолидированные стили для всего приложения
+ */
+
+/* ========================================
+   CSS ПЕРЕМЕННЫЕ
+   ======================================== */
+:root {
+    /* Цвета авиационной палитры */
+    --color-primary: #00ff00;
+    --color-secondary: #ffffff;
+    --color-background: #0a0a0a;
+    --color-panel-bg: rgba(20, 20, 20, 0.95);
+    --color-glass: rgba(255, 255, 255, 0.05);
+    --color-border: rgba(0, 255, 0, 0.3);
+    --color-border-active: rgba(0, 255, 0, 0.8);
+    --color-text-primary: #00ff00;
+    --color-text-secondary: #ffffff;
+    --color-text-muted: #888888;
+    --color-warning: #ffaa00;
+    --color-error: #ff0000;
+    --color-success: #00ff00;
+    
+    /* Шрифты */
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    --font-sans: 'Inter', 'Arial', sans-serif;
+    
+    /* Размеры */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    
+    /* Анимации */
+    --duration-short: 200ms;
+    --duration-medium: 300ms;
+    --duration-long: 500ms;
+    --easing: ease-in-out;
+}
+
+/* ========================================
+   БАЗОВЫЕ СТИЛИ
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: var(--font-sans);
+    background: var(--color-background);
+    color: var(--color-text-secondary);
+    overflow: hidden;
+}
+
+body {
+    font-size: 14px;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================
+   ОСНОВНОЙ КОНТЕЙНЕР
+   ======================================== */
+.efb-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+}
+
+/* ========================================
+   ЗАГОЛОВОК
+   ======================================== */
+.efb-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-panel-bg);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border);
+    min-height: 60px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.efb-title {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    letter-spacing: 1px;
+}
+
+.version {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-text-muted);
+    background: var(--color-glass);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+}
+
+.header-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.status-indicators {
+    display: flex;
+    gap: var(--spacing-lg);
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-glass);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    transition: all var(--duration-medium) var(--easing);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-text-muted);
+    transition: all var(--duration-medium) var(--easing);
+}
+
+.status-dot.active {
+    background: var(--color-success);
+    box-shadow: 0 0 8px var(--color-success);
+}
+
+.status-dot.loading {
+    background: var(--color-warning);
+    animation: pulse 1s infinite;
+}
+
+.status-dot.error {
+    background: var(--color-error);
+    box-shadow: 0 0 8px var(--color-error);
+}
+
+.status-text {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.time-display {
+    text-align: right;
+}
+
+.current-time {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    line-height: 1;
+}
+
+.current-date {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-xs);
+}
+
+/* ========================================
+   ОСНОВНОЙ КОНТЕНТ
+   ======================================== */
+.efb-main {
+    display: grid;
+    grid-template-columns: 300px 1fr 300px 300px;
+    flex: 1;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    overflow: hidden;
+}
+
+/* ========================================
+   ПАНЕЛИ
+   ======================================== */
+.flight-data-panel,
+.route-panel,
+.weather-panel {
+    background: var(--color-panel-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.panel-header {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-glass);
+}
+
+.panel-header h2 {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    letter-spacing: 1px;
+}
+
+.panel-content {
+    flex: 1;
+    padding: var(--spacing-md);
+    overflow-y: auto;
+}
+
+/* ========================================
+   ПАНЕЛЬ ДАННЫХ ПОЛЕТА
+   ======================================== */
+.data-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.data-group label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    background: var(--color-glass);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    transition: all var(--duration-medium) var(--easing);
+}
+
+.input-group:focus-within {
+    border-color: var(--color-border-active);
+    box-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
+}
+
+.input-group input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--color-text-primary);
+    outline: none;
+}
+
+.input-group .unit {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-text-muted);
+    background: var(--color-glass);
+    border-left: 1px solid var(--color-border);
+}
+
+.data-value {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-glass);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    text-align: center;
+}
+
+/* ========================================
+   ПАНЕЛЬ КАРТЫ
+   ======================================== */
+.map-panel {
+    background: var(--color-panel-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.map-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.map-range {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-text-muted);
+    background: var(--color-glass);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+}
+
+.efb-map {
+    flex: 1;
+    background: var(--color-background);
+    position: relative;
+    filter: contrast(1.3) brightness(0.9) saturate(0.8);
+}
+
+.map-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: var(--color-background);
+}
+
+.placeholder-content {
+    text-align: center;
+    color: var(--color-text-muted);
+}
+
+.placeholder-icon {
+    font-size: 48px;
+    margin-bottom: var(--spacing-md);
+    opacity: 0.5;
+}
+
+.placeholder-text {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--color-text-muted);
+}
+
+/* ========================================
+   ПАНЕЛЬ МАРШРУТА
+   ======================================== */
+.route-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.route-placeholder {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--color-text-muted);
+}
+
+/* ========================================
+   ПАНЕЛЬ ПОГОДЫ
+   ======================================== */
+.weather-panel {
+    background: var(--color-panel-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.weather-panel.hidden {
+    display: none;
+}
+
+.weather-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    flex: 1;
+}
+
+.weather-card {
+    background: var(--color-glass);
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-md);
+    transition: all var(--duration-medium) var(--easing);
+}
+
+.weather-card:hover {
+    border-color: var(--color-border-active);
+    box-shadow: 0 0 8px rgba(0, 255, 0, 0.1);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.card-title {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card-time {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-text-muted);
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.weather-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.temperature {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-xs);
+}
+
+.temp-value {
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.temp-unit {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--color-text-muted);
+}
+
+.weather-icon {
+    font-size: 24px;
+}
+
+.weather-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detail-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+}
+
+.detail-value {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.detail-unit {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-text-muted);
+    margin-left: var(--spacing-xs);
+}
+
+.condition-item,
+.impact-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-xs) 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.condition-item:last-child,
+.impact-item:last-child {
+    border-bottom: none;
+}
+
+.condition-label,
+.impact-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+}
+
+.condition-value,
+.impact-value {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.risk-value {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    background: var(--color-glass);
+    border: 1px solid var(--color-border);
+}
+
+.risk-value.low {
+    color: var(--color-success);
+    border-color: var(--color-success);
+}
+
+.risk-value.moderate {
+    color: var(--color-warning);
+    border-color: var(--color-warning);
+}
+
+.risk-value.high {
+    color: var(--color-error);
+    border-color: var(--color-error);
+}
+
+/* ========================================
+   ПАНЕЛЬ УПРАВЛЕНИЯ
+   ======================================== */
+.efb-footer {
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-panel-bg);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--color-border);
+}
+
+.control-panel {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+}
+
+.control-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-glass);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all var(--duration-medium) var(--easing);
+    outline: none;
+}
+
+.control-btn:hover {
+    border-color: var(--color-border-active);
+    box-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
+    transform: translateY(-1px);
+}
+
+.control-btn:active {
+    transform: translateY(0);
+}
+
+.control-btn.primary {
+    background: var(--color-primary);
+    color: var(--color-background);
+    border-color: var(--color-primary);
+}
+
+.control-btn.primary:hover {
+    background: var(--color-text-primary);
+    box-shadow: 0 0 12px rgba(0, 255, 0, 0.4);
+}
+
+.control-btn.secondary {
+    background: var(--color-glass);
+    border-color: var(--color-text-muted);
+    color: var(--color-text-muted);
+}
+
+.control-btn.secondary:hover {
+    border-color: var(--color-warning);
+    color: var(--color-warning);
+}
+
+.control-btn.active {
+    background: var(--color-primary);
+    color: var(--color-background);
+    border-color: var(--color-primary);
+}
+
+.btn-icon {
+    font-size: 16px;
+}
+
+.btn-text {
+    font-size: 11px;
+}
+
+/* ========================================
+   УВЕДОМЛЕНИЯ
+   ======================================== */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    border-radius: var(--radius-sm);
+    color: white;
+    font-weight: 600;
+    z-index: 10000;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.notification-info {
+    background: #2196F3;
+}
+
+.notification-success {
+    background: #4CAF50;
+}
+
+.notification-warning {
+    background: #FF9800;
+}
+
+.notification-error {
+    background: #F44336;
+}
+
+/* ========================================
+   АДАПТИВНОСТЬ
+   ======================================== */
+@media (max-width: 1024px) {
+    .efb-main {
+        grid-template-columns: 250px 1fr 250px 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .efb-main {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+    }
+    
+    .efb-header {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        min-height: auto;
+    }
+    
+    .header-center {
+        order: -1;
+    }
+    
+    .status-indicators {
+        gap: var(--spacing-md);
+    }
+    
+    .control-panel {
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+    }
+    
+    .control-btn {
+        flex: 1;
+        min-width: 120px;
+    }
+}
+
+/* ========================================
+   УТИЛИТЫ
+   ======================================== */
+.hidden {
+    display: none !important;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ========================================
+   АНИМАЦИИ
+   ======================================== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+.fade-in {
+    animation: fadeIn var(--duration-medium) var(--easing);
+}
+
+.slide-in {
+    animation: slideIn var(--duration-medium) var(--easing);
+}

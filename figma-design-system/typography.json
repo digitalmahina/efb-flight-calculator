@@ -1,0 +1,214 @@
+{
+  "name": "EFB Typography System",
+  "description": "Типографическая система для авиационной дизайн-системы",
+  "fontFamilies": [
+    {
+      "name": "JetBrains Mono",
+      "type": "monospace",
+      "weights": ["300", "400", "500", "600", "700"],
+      "usage": "Основной шрифт для интерфейса, данные, коды",
+      "fallback": "Courier New, monospace",
+      "googleFonts": true,
+      "url": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap"
+    },
+    {
+      "name": "Inter",
+      "type": "sans-serif",
+      "weights": ["300", "400", "500", "600", "700"],
+      "usage": "Вспомогательный шрифт для текста",
+      "fallback": "Arial, sans-serif",
+      "googleFonts": true,
+      "url": "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    }
+  ],
+  "textStyles": [
+    {
+      "name": "Header Title",
+      "fontFamily": "JetBrains Mono",
+      "fontSize": "32px",
+      "fontWeight": "700",
+      "lineHeight": "1.2",
+      "letterSpacing": "2px",
+      "color": "#00FF00",
+      "textTransform": "none",
+      "usage": "Главный заголовок приложения"
+    },
+    {
+      "name": "Header Subtitle",
+      "fontFamily": "JetBrains Mono",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "1.4",
+      "letterSpacing": "1px",
+      "color": "#888888",
+      "textTransform": "uppercase",
+      "usage": "Подзаголовок в хедере"
+    },
+    {
+      "name": "Panel Title",
+      "fontFamily": "JetBrains Mono",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "lineHeight": "1.4",
+      "letterSpacing": "1px",
+      "color": "#00FF00",
+      "textTransform": "uppercase",
+      "usage": "Заголовки панелей"
+    },
+    {
+      "name": "Data Value",
+      "fontFamily": "JetBrains Mono",
+      "fontSize": "24px",
+      "fontWeight": "700",
+      "lineHeight": "1.2",
+      "letterSpacing": "0",
+      "color": "#00FF00",
+      "textTransform": "none",
+      "usage": "Основные значения данных"
+    },
+    {
+      "name": "Data Label",
+      "fontFamily": "JetBrains Mono",
+      "fontSize": "10px",
+      "fontWeight": "400",
+      "lineHeight": "1.4",
+      "letterSpacing": "1px",
+      "color": "#888888",
+      "textTransform": "uppercase",
+      "usage": "Подписи к данным"
+    },
+    {
+      "name": "Button Text",
+      "fontFamily": "JetBrains Mono",
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "lineHeight": "1.4",
+      "letterSpacing": "0.5px",
+      "color": "#0A0A0A",
+      "textTransform": "uppercase",
+      "usage": "Текст на кнопках"
+    },
+    {
+      "name": "Button Text Secondary",
+      "fontFamily": "JetBrains Mono",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "lineHeight": "1.4",
+      "letterSpacing": "0.5px",
+      "color": "#888888",
+      "textTransform": "uppercase",
+      "usage": "Текст на вторичных кнопках"
+    },
+    {
+      "name": "Input Text",
+      "fontFamily": "JetBrains Mono",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "lineHeight": "1.4",
+      "letterSpacing": "0",
+      "color": "#00FF00",
+      "textTransform": "none",
+      "usage": "Текст в полях ввода"
+    },
+    {
+      "name": "Input Label",
+      "fontFamily": "JetBrains Mono",
+      "fontSize": "10px",
+      "fontWeight": "500",
+      "lineHeight": "1.4",
+      "letterSpacing": "0.5px",
+      "color": "#888888",
+      "textTransform": "uppercase",
+      "usage": "Подписи к полям ввода"
+    },
+    {
+      "name": "Status Text",
+      "fontFamily": "JetBrains Mono",
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "lineHeight": "1.4",
+      "letterSpacing": "1px",
+      "color": "#FFFFFF",
+      "textTransform": "uppercase",
+      "usage": "Статусные индикаторы"
+    },
+    {
+      "name": "Time Display",
+      "fontFamily": "JetBrains Mono",
+      "fontSize": "24px",
+      "fontWeight": "600",
+      "lineHeight": "1.2",
+      "letterSpacing": "0",
+      "color": "#00FF00",
+      "textTransform": "none",
+      "usage": "Отображение времени"
+    },
+    {
+      "name": "Date Display",
+      "fontFamily": "JetBrains Mono",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "1.4",
+      "letterSpacing": "1px",
+      "color": "#888888",
+      "textTransform": "uppercase",
+      "usage": "Отображение даты"
+    },
+    {
+      "name": "Route Text",
+      "fontFamily": "JetBrains Mono",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "1.4",
+      "letterSpacing": "0",
+      "color": "#FFFFFF",
+      "textTransform": "none",
+      "usage": "Текст маршрута"
+    },
+    {
+      "name": "Weather Text",
+      "fontFamily": "JetBrains Mono",
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "lineHeight": "1.4",
+      "letterSpacing": "0.5px",
+      "color": "#00FF00",
+      "textTransform": "uppercase",
+      "usage": "Погодные данные"
+    },
+    {
+      "name": "Notification Title",
+      "fontFamily": "JetBrains Mono",
+      "fontSize": "12px",
+      "fontWeight": "600",
+      "lineHeight": "1.4",
+      "letterSpacing": "1px",
+      "color": "#FFFFFF",
+      "textTransform": "uppercase",
+      "usage": "Заголовки уведомлений"
+    },
+    {
+      "name": "Notification Message",
+      "fontFamily": "Inter",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "lineHeight": "1.4",
+      "letterSpacing": "0",
+      "color": "#FFFFFF",
+      "textTransform": "none",
+      "usage": "Текст уведомлений"
+    }
+  ],
+  "characterStyles": [
+    {
+      "name": "Monospace",
+      "fontFamily": "JetBrains Mono",
+      "usage": "Для кодов, данных, технической информации"
+    },
+    {
+      "name": "Sans Serif",
+      "fontFamily": "Inter",
+      "usage": "Для обычного текста, описаний"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "efb-flight-calculator",
+  "version": "1.0.0",
+  "description": "Electronic Flight Bag - Flight Calculator with Weather Integration",
+  "main": "src/main.js",
+  "type": "module",
+  "bin": {
+    "efb-mcp": "./mcp-server.js"
+  },
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "dev": "python3 -m http.server 8080 --directory src",
+    "test": "node test/run-all-tests.js",
+    "test:unit": "node test/unit/run-unit-tests.js",
+    "test:integration": "node test/integration/run-integration-tests.js",
+    "test:weather": "node test/weather/run-weather-tests.js",
+    "build": "node build/build.js",
+    "clean": "node build/clean.js",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "docs": "node docs/generate-docs.js",
+    "validate": "node scripts/validate-structure.js",
+    "backup": "node scripts/backup.js",
+    "restore": "node scripts/restore.js",
+    "mcp:start": "node mcp-server.js",
+    "mcp:install": "npm install -g ."
+  },
+  "keywords": [
+    "aviation",
+    "flight-calculator",
+    "efb",
+    "weather",
+    "gpx",
+    "navigation",
+    "mcp"
+  ],
+  "author": "EFB Development Team",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.18.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "local"
+  },
+  "bugs": {
+    "url": "local"
+  },
+  "homepage": "local"
+}

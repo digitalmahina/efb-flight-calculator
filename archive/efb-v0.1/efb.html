@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EFB - Electronic Flight Bag</title>
+    <link rel="stylesheet" href="efb.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="efb-container">
+        <!-- Header Section -->
+        <header class="efb-header">
+            <div class="header-left">
+                <div class="aircraft-icon">✈</div>
+                <div class="flight-info">
+                    <div class="flight-number">FLIGHT CALC</div>
+                    <div class="aircraft-type">AIRCRAFT NAVIGATOR</div>
+                </div>
+            </div>
+            <div class="header-center">
+                <div class="system-status">
+                    <div class="status-indicator active"></div>
+                    <span>EFB ACTIVE</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="time-display" id="currentTime">--:--:--</div>
+                <div class="date-display" id="currentDate">-- --- ----</div>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <main class="efb-main">
+            <!-- Left Panel - Flight Data -->
+            <section class="panel flight-data-panel">
+                <div class="panel-header">
+                    <h2>FLIGHT DATA</h2>
+                    <div class="panel-indicator"></div>
+                </div>
+                
+                <div class="data-grid">
+                    <div class="data-item">
+                        <div class="data-label">CRUISE SPEED</div>
+                        <div class="data-value" id="cruiseSpeed">200</div>
+                        <div class="data-unit">KT</div>
+                    </div>
+                    
+                    <div class="data-item">
+                        <div class="data-label">FUEL FLOW</div>
+                        <div class="data-value" id="fuelFlow">600</div>
+                        <div class="data-unit">KG/H</div>
+                    </div>
+                    
+                    <div class="data-item">
+                        <div class="data-label">TOTAL DISTANCE</div>
+                        <div class="data-value" id="totalDistance">0.00</div>
+                        <div class="data-unit">NM</div>
+                    </div>
+                    
+                    <div class="data-item">
+                        <div class="data-label">FLIGHT TIME</div>
+                        <div class="data-value" id="flightTime">00:00</div>
+                        <div class="data-unit">HH:MM</div>
+                    </div>
+                    
+                    <div class="data-item">
+                        <div class="data-label">TOTAL FUEL</div>
+                        <div class="data-value" id="totalFuel">0.0</div>
+                        <div class="data-unit">KG</div>
+                    </div>
+                    
+                    <div class="data-item">
+                        <div class="data-label">WAYPOINTS</div>
+                        <div class="data-value" id="waypointCount">0</div>
+                        <div class="data-unit">PTS</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Center Panel - Map Display -->
+            <section class="panel map-panel">
+                <div class="panel-header">
+                    <h2>NAVIGATION DISPLAY</h2>
+                    <div class="panel-controls">
+                        <button class="control-btn" id="loadRouteBtn">LOAD ROUTE</button>
+                        <button class="control-btn" id="clearRouteBtn">CLEAR</button>
+                    </div>
+                </div>
+                
+                <div class="map-container">
+                    <div id="efbMap" class="efb-map"></div>
+                    <div class="map-overlay">
+                        <div class="map-info">
+                            <div class="info-item">
+                                <span class="info-label">RANGE:</span>
+                                <span class="info-value" id="mapRange">50NM</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">MODE:</span>
+                                <span class="info-value">NAV</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel - Route Information -->
+            <section class="panel route-panel">
+                <div class="panel-header">
+                    <h2>ROUTE INFO</h2>
+                    <div class="panel-indicator"></div>
+                </div>
+                
+                <div class="route-list" id="routeList">
+                    <div class="no-route">
+                        <div class="no-route-icon">📋</div>
+                        <div class="no-route-text">NO ROUTE LOADED</div>
+                        <div class="no-route-subtext">Load GPX file to display route</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Panel - Controls -->
+        <footer class="efb-footer">
+            <div class="control-section">
+                <div class="control-group">
+                    <label class="control-label">SPEED (KT)</label>
+                    <input type="number" class="control-input" id="speedInput" value="200" min="100" max="500">
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">FUEL FLOW (KG/H)</label>
+                    <input type="number" class="control-input" id="fuelInput" value="600" min="100" max="2000">
+                </div>
+                
+                <div class="control-group">
+                    <input type="file" id="gpxFileInput" accept=".gpx" style="display: none;">
+                    <button class="primary-btn" id="loadGpxBtn">LOAD GPX</button>
+                </div>
+                
+                <div class="control-group">
+                    <button class="secondary-btn" id="calculateBtn">CALCULATE</button>
+                </div>
+            </div>
+            
+            <div class="status-section">
+                <div class="status-item">
+                    <div class="status-dot" id="gpsStatus"></div>
+                    <span>GPS</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot" id="navStatus"></div>
+                    <span>NAV</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot" id="calcStatus"></div>
+                    <span>CALC</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Hidden file input -->
+    <input type="file" id="hiddenFileInput" accept=".gpx" style="display: none;">
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="gpx-parser.js"></script>
+    <script src="efb.js"></script>
+</body>
+</html>

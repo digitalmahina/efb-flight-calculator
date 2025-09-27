@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EFB Cache System Test</title>
+    <style>
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 2px solid #00ff00;
+            border-radius: 8px;
+            background: rgba(0, 255, 0, 0.05);
+        }
+        
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 8px;
+            background: rgba(20, 20, 20, 0.95);
+        }
+        
+        .test-section h3 {
+            color: #00ff00;
+            margin-top: 0;
+            border-bottom: 1px solid rgba(0, 255, 0, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .test-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: rgba(0, 255, 0, 0.2);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .test-output {
+            background: #000;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 4px;
+            padding: 15px;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-size: 12px;
+            white-space: pre-wrap;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 4px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ff00;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff00, #00aa00);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .alert {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border-left: 4px solid;
+        }
+        
+        .alert-success {
+            background: rgba(0, 255, 0, 0.1);
+            border-color: #00ff00;
+            color: #00ff00;
+        }
+        
+        .alert-warning {
+            background: rgba(255, 170, 0, 0.1);
+            border-color: #ffaa00;
+            color: #ffaa00;
+        }
+        
+        .alert-error {
+            background: rgba(255, 0, 0, 0.1);
+            border-color: #ff0000;
+            color: #ff0000;
+        }
+        
+        .log-entry {
+            margin: 2px 0;
+            padding: 2px 5px;
+            border-radius: 2px;
+        }
+        
+        .log-info {
+            color: #00ff00;
+        }
+        
+        .log-warn {
+            color: #ffaa00;
+        }
+        
+        .log-error {
+            color: #ff0000;
+        }
+        
+        .log-success {
+            color: #00ff00;
+            font-weight: bold;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .loading {
+            animation: pulse 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 EFB Cache System Test Suite</h1>
+            <p>Система умного кэширования для авиационного калькулятора</p>
+        </div>
+        
+        <div class="test-section">
+            <h3>📊 Cache Statistics</h3>
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card">
+                    <div class="stat-value" id="hitRate">0%</div>
+                    <div class="stat-label">Hit Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalRequests">0</div>
+                    <div class="stat-label">Total Requests</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="cacheSize">0</div>
+                    <div class="stat-label">Cache Size</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="memoryUsage">0 MB</div>
+                    <div class="stat-label">Memory Usage</div>
+                </div>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>🧪 Test Controls</h3>
+            <div class="test-controls">
+                <button class="btn" onclick="runAllTests()">Run All Tests</button>
+                <button class="btn" onclick="runSmartCacheTest()">Smart Cache Test</button>
+                <button class="btn" onclick="runDependenciesTest()">Dependencies Test</button>
+                <button class="btn" onclick="runPredictiveTest()">Predictive Test</button>
+                <button class="btn" onclick="runMetricsTest()">Metrics Test</button>
+                <button class="btn" onclick="runEFBCacheTest()">EFB Cache Test</button>
+                <button class="btn" onclick="clearCache()">Clear Cache</button>
+                <button class="btn" onclick="clearOutput()">Clear Output</button>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>📝 Test Output</h3>
+            <div class="test-output" id="testOutput">Ready to run tests...\n</div>
+        </div>
+        
+        <div class="test-section">
+            <h3>⚠️ Alerts & Recommendations</h3>
+            <div id="alertsContainer"></div>
+        </div>
+    </div>
+    
+    <!-- Подключаем модули -->
+    <script type="module">
+        import SmartCache from './smart-cache.js';
+        import CacheDependencies from './cache-dependencies.js';
+        import PredictiveCache from './predictive-cache.js';
+        import CacheMetrics from './cache-metrics.js';
+        import EFBCache from './efb-cache.js';
+        import CacheSystemTest from './cache-test.js';
+        
+        // Глобальные переменные для тестирования
+        window.testCache = new SmartCache({
+            defaultTTL: 5000,
+            maxSize: 100,
+            enableMetrics: true
+        });
+        
+        window.testDependencies = new CacheDependencies();
+        window.testPredictive = new PredictiveCache();
+        window.testMetrics = new CacheMetrics();
+        window.testEFBCache = new EFBCache();
+        window.testSuite = new CacheSystemTest();
+        
+        // Функции для кнопок
+        window.runAllTests = async () => {
+            clearOutput();
+            log('🚀 Starting comprehensive test suite...', 'info');
+            await window.testSuite.runAllTests();
+            updateStats();
+        };
+        
+        window.runSmartCacheTest = async () => {
+            clearOutput();
+            log('📦 Testing SmartCache...', 'info');
+            await window.testSuite.testSmartCache();
+            updateStats();
+        };
+        
+        window.runDependenciesTest = async () => {
+            clearOutput();
+            log('🔗 Testing Cache Dependencies...', 'info');
+            await window.testSuite.testCacheDependencies();
+            updateStats();
+        };
+        
+        window.runPredictiveTest = async () => {
+            clearOutput();
+            log('🔮 Testing Predictive Cache...', 'info');
+            await window.testSuite.testPredictiveCache();
+            updateStats();
+        };
+        
+        window.runMetricsTest = async () => {
+            clearOutput();
+            log('📊 Testing Cache Metrics...', 'info');
+            await window.testSuite.testCacheMetrics();
+            updateStats();
+        };
+        
+        window.runEFBCacheTest = async () => {
+            clearOutput();
+            log('✈️ Testing EFB Cache...', 'info');
+            await window.testSuite.testEFBCache();
+            updateStats();
+        };
+        
+        window.clearCache = () => {
+            if (window.testCache) {
+                window.testCache.clear();
+            }
+            if (window.testEFBCache) {
+                window.testEFBCache.clearAll();
+            }
+            log('🗑️ All caches cleared', 'success');
+            updateStats();
+        };
+        
+        window.clearOutput = () => {
+            document.getElementById('testOutput').textContent = '';
+            document.getElementById('alertsContainer').innerHTML = '';
+        };
+        
+        // Утилиты
+        window.log = (message, type = 'info') => {
+            const output = document.getElementById('testOutput');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry log-${type}`;
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            output.appendChild(logEntry);
+            output.scrollTop = output.scrollHeight;
+        };
+        
+        window.updateStats = () => {
+            if (window.testCache) {
+                const stats = window.testCache.getStats();
+                document.getElementById('hitRate').textContent = `${(stats.hitRate * 100).toFixed(1)}%`;
+                document.getElementById('totalRequests').textContent = stats.totalRequests;
+                document.getElementById('cacheSize').textContent = stats.cacheSize;
+                document.getElementById('memoryUsage').textContent = `${stats.memoryUsageMB} MB`;
+                
+                // Обновляем прогресс-бар
+                const progressFill = document.getElementById('progressFill');
+                progressFill.style.width = `${stats.hitRate * 100}%`;
+            }
+        };
+        
+        // Симуляция нагрузки для демонстрации
+        window.simulateLoad = () => {
+            log('🔄 Simulating cache load...', 'info');
+            
+            // Добавляем данные в кэш
+            for (let i = 0; i < 50; i++) {
+                window.testCache.set(`test_key_${i}`, {
+                    id: i,
+                    data: `Test data ${i}`,
+                    timestamp: Date.now()
+                });
+            }
+            
+            // Читаем данные (смесь попаданий и промахов)
+            for (let i = 0; i < 100; i++) {
+                const key = `test_key_${Math.floor(Math.random() * 60)}`; // 50% попаданий
+                window.testCache.get(key);
+            }
+            
+            log('✅ Load simulation complete', 'success');
+            updateStats();
+        };
+        
+        // Запускаем симуляцию нагрузки при загрузке
+        setTimeout(() => {
+            simulateLoad();
+        }, 1000);
+        
+        // Обновляем статистику каждые 5 секунд
+        setInterval(updateStats, 5000);
+        
+        // Инициализация
+        log('🎯 Cache System Test Suite initialized', 'success');
+        log('Click "Run All Tests" to start comprehensive testing', 'info');
+    </script>
+</body>
+</html>

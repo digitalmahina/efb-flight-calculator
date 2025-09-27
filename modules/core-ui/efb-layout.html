@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EFB - Electronic Flight Bag</title>
+    <link rel="stylesheet" href="efb-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Основной контейнер EFB -->
+    <div class="efb-container">
+        
+        <!-- Заголовок EFB -->
+        <header class="efb-header">
+            <div class="header-left">
+                <div class="system-title">
+                    <h1>EFB</h1>
+                    <span class="system-subtitle">Electronic Flight Bag</span>
+                </div>
+            </div>
+            
+            <div class="header-center">
+                <div class="system-status">
+                    <div class="status-indicator" id="gpsStatus">
+                        <span class="status-dot gps"></span>
+                        <span class="status-text">GPS</span>
+                    </div>
+                    <div class="status-indicator" id="navStatus">
+                        <span class="status-dot nav"></span>
+                        <span class="status-text">NAV</span>
+                    </div>
+                    <div class="status-indicator" id="calcStatus">
+                        <span class="status-dot calc"></span>
+                        <span class="status-text">CALC</span>
+                    </div>
+                    <div class="status-indicator" id="weatherStatus">
+                        <span class="status-dot weather"></span>
+                        <span class="status-text">WX</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <div class="time-display">
+                    <div class="current-time" id="currentTime">00:00:00</div>
+                    <div class="current-date" id="currentDate">01 JAN 2024</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основная область -->
+        <main class="efb-main">
+            
+            <!-- Левая панель - Данные полета -->
+            <aside class="flight-data-panel">
+                <div class="panel-header">
+                    <h2>FLIGHT DATA</h2>
+                    <div class="panel-indicator"></div>
+                </div>
+                
+                <div class="data-cards">
+                    <div class="data-card">
+                        <div class="card-label">CRUISE SPEED</div>
+                        <div class="card-value" id="cruiseSpeed">--</div>
+                        <div class="card-unit">KM/H</div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-label">FUEL FLOW</div>
+                        <div class="card-value" id="fuelFlow">--</div>
+                        <div class="card-unit">KG/H</div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-label">TOTAL DISTANCE</div>
+                        <div class="card-value" id="totalDistance">--</div>
+                        <div class="card-unit">KM</div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-label">FLIGHT TIME</div>
+                        <div class="card-value" id="flightTime">--</div>
+                        <div class="card-unit">H:MM</div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-label">TOTAL FUEL</div>
+                        <div class="card-value" id="totalFuel">--</div>
+                        <div class="card-unit">KG</div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-label">WAYPOINTS</div>
+                        <div class="card-value" id="waypointCount">--</div>
+                        <div class="card-unit">PTS</div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Центральная панель - Карта -->
+            <section class="map-panel">
+                <div class="panel-header">
+                    <h2>NAVIGATION MAP</h2>
+                    <div class="panel-indicator"></div>
+                </div>
+                
+                <div class="map-container">
+                    <div class="map-placeholder" id="efbMap">
+                        <div class="map-overlay">
+                            <div class="map-status">
+                                <span class="status-icon">🗺️</span>
+                                <span class="status-text">NO ROUTE LOADED</span>
+                                <span class="status-hint">Load GPX file to display route</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="map-controls">
+                        <div class="zoom-controls">
+                            <button class="zoom-btn" id="zoomIn">+</button>
+                            <button class="zoom-btn" id="zoomOut">-</button>
+                        </div>
+                        <div class="range-display" id="mapRange">RANGE: -- NM</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Правая панель - Информация о маршруте и погода -->
+            <aside class="route-panel">
+                <div class="panel-header">
+                    <h2>ROUTE INFO</h2>
+                    <div class="panel-indicator"></div>
+                </div>
+                
+                <div class="route-container">
+                    <div class="route-list" id="routeList">
+                        <div class="route-placeholder">
+                            <div class="placeholder-icon">📍</div>
+                            <div class="placeholder-text">NO ROUTE LOADED</div>
+                            <div class="placeholder-hint">Load GPX file to display waypoints</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Погодная панель -->
+            <aside class="weather-panel">
+                <div class="panel-header">
+                    <h2>WEATHER DATA</h2>
+                    <div class="panel-indicator"></div>
+                </div>
+                
+                <div class="weather-container">
+                    <!-- Current Weather Card -->
+                    <div class="weather-card current-weather">
+                        <div class="card-header">
+                            <span class="card-title">CURRENT CONDITIONS</span>
+                            <span class="card-time" id="weatherUpdateTime">--:--</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="weather-main">
+                                <div class="temperature">
+                                    <span class="temp-value" id="currentTemp">--</span>
+                                    <span class="temp-unit">°C</span>
+                                </div>
+                                <div class="weather-icon" id="weatherIcon">☀️</div>
+                            </div>
+                            <div class="weather-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">WIND</span>
+                                    <span class="detail-value" id="windSpeed">--</span>
+                                    <span class="detail-unit">KT</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">VIS</span>
+                                    <span class="detail-value" id="visibility">--</span>
+                                    <span class="detail-unit">SM</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">CLOUDS</span>
+                                    <span class="detail-value" id="cloudBase">--</span>
+                                    <span class="detail-unit">FT</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flight Conditions Card -->
+                    <div class="weather-card flight-conditions">
+                        <div class="card-header">
+                            <span class="card-title">FLIGHT CONDITIONS</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="condition-rating">
+                                <div class="rating-label">RATING</div>
+                                <div class="rating-value" id="flightRating">--</div>
+                            </div>
+                            <div class="condition-details">
+                                <div class="condition-item">
+                                    <span class="condition-label">VISIBILITY</span>
+                                    <span class="condition-value" id="visibilityCategory">--</span>
+                                </div>
+                                <div class="condition-item">
+                                    <span class="condition-label">WIND</span>
+                                    <span class="condition-value" id="windCategory">--</span>
+                                </div>
+                                <div class="condition-item">
+                                    <span class="condition-label">CLOUDS</span>
+                                    <span class="condition-value" id="cloudCategory">--</span>
+                                </div>
+                            </div>
+                            <div class="risk-indicator">
+                                <div class="risk-label">RISK LEVEL</div>
+                                <div class="risk-value" id="riskLevel">--</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Weather Impact Card -->
+                    <div class="weather-card weather-impact">
+                        <div class="card-header">
+                            <span class="card-title">WEATHER IMPACT</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="impact-metrics">
+                                <div class="metric-item">
+                                    <span class="metric-label">SPEED IMPACT</span>
+                                    <span class="metric-value" id="speedImpact">--</span>
+                                    <span class="metric-unit">%</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label">FUEL IMPACT</span>
+                                    <span class="metric-value" id="fuelImpact">--</span>
+                                    <span class="metric-unit">%</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label">TIME IMPACT</span>
+                                    <span class="metric-value" id="timeImpact">--</span>
+                                    <span class="metric-unit">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- Нижняя панель управления -->
+        <footer class="efb-footer">
+            <div class="control-panel">
+                
+                <!-- Левая группа - Параметры полета -->
+                <div class="control-group">
+                    <div class="input-group">
+                        <label for="speedInput">CRUISE SPEED</label>
+                        <input type="number" id="speedInput" value="200" min="100" max="2000" step="10">
+                        <span class="input-unit">KM/H</span>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="fuelInput">FUEL FLOW</label>
+                        <input type="number" id="fuelInput" value="600" min="100" max="5000" step="50">
+                        <span class="input-unit">KG/H</span>
+                    </div>
+                </div>
+
+                <!-- Центральная группа - Основные кнопки -->
+                <div class="control-group">
+                    <button class="control-btn primary" id="loadGpxBtn">
+                        <span class="btn-icon">📁</span>
+                        <span class="btn-text">LOAD GPX</span>
+                    </button>
+                    
+                    <button class="control-btn secondary" id="calculateBtn" disabled>
+                        <span class="btn-icon">🚀</span>
+                        <span class="btn-text">CALCULATE</span>
+                    </button>
+                    
+                    <button class="control-btn danger" id="clearRouteBtn">
+                        <span class="btn-icon">🗑️</span>
+                        <span class="btn-text">CLEAR</span>
+                    </button>
+                    
+                    <button class="control-btn" id="weatherBtn">
+                        <span class="btn-icon">🌤️</span>
+                        <span class="btn-text">WEATHER</span>
+                    </button>
+                </div>
+
+                <!-- Правая группа - Статус -->
+                <div class="control-group">
+                    <div class="status-display">
+                        <div class="status-item">
+                            <span class="status-label">STATUS:</span>
+                            <span class="status-value" id="systemStatus">READY</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">ROUTE:</span>
+                            <span class="status-value" id="routeStatus">NONE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Скрытый input для загрузки файлов -->
+        <input type="file" id="hiddenFileInput" accept=".gpx" style="display: none;">
+    </div>
+
+    <!-- Система уведомлений -->
+    <div class="notification-container" id="notificationContainer">
+        <!-- Уведомления будут добавляться динамически -->
+    </div>
+
+    <!-- Подключение модулей -->
+    <script type="module" src="../shared/event-bus.js"></script>
+    <script type="module" src="../shared/utils.js"></script>
+    <script type="module" src="../shared/constants.js"></script>
+    <script type="module" src="../mcp-integration/weather-mcp.js"></script>
+    <script type="module" src="../calculations/weather-calculations.js"></script>
+    <script type="module" src="../calculations/weather-enhanced-calculations.js"></script>
+    <script type="module" src="efb-base.js"></script>
+    <script type="module" src="../integration/main.js"></script>
+    <script type="module" src="efb-weather-integration.js"></script>
+</body>
+</html>

@@ -1,0 +1,498 @@
+{
+  "name": "EFB Icons and Assets",
+  "description": "Иконки и графические ресурсы для EFB Flight Calculator",
+  "icons": [
+    {
+      "name": "airplane",
+      "unicode": "✈️",
+      "description": "Самолет",
+      "usage": "Основная иконка приложения"
+    },
+    {
+      "name": "folder",
+      "unicode": "📁",
+      "description": "Папка",
+      "usage": "Загрузка файлов"
+    },
+    {
+      "name": "rocket",
+      "unicode": "🚀",
+      "description": "Ракета",
+      "usage": "Кнопка расчета"
+    },
+    {
+      "name": "trash",
+      "unicode": "🗑️",
+      "description": "Корзина",
+      "usage": "Очистка данных"
+    },
+    {
+      "name": "calculator",
+      "unicode": "🧮",
+      "description": "Калькулятор",
+      "usage": "Расчеты"
+    },
+    {
+      "name": "cloud-sun",
+      "unicode": "🌤️",
+      "description": "Солнце с облаками",
+      "usage": "Погодные данные"
+    },
+    {
+      "name": "map",
+      "unicode": "🗺️",
+      "description": "Карта",
+      "usage": "Навигационная карта"
+    },
+    {
+      "name": "location",
+      "unicode": "📍",
+      "description": "Местоположение",
+      "usage": "Точки маршрута"
+    },
+    {
+      "name": "sun",
+      "unicode": "☀️",
+      "description": "Солнце",
+      "usage": "Ясная погода"
+    },
+    {
+      "name": "cloud",
+      "unicode": "☁️",
+      "description": "Облако",
+      "usage": "Облачная погода"
+    },
+    {
+      "name": "rain",
+      "unicode": "🌧️",
+      "description": "Дождь",
+      "usage": "Дождливая погода"
+    },
+    {
+      "name": "snow",
+      "unicode": "❄️",
+      "description": "Снег",
+      "usage": "Снежная погода"
+    },
+    {
+      "name": "storm",
+      "unicode": "⛈️",
+      "description": "Гроза",
+      "usage": "Грозовая погода"
+    },
+    {
+      "name": "fog",
+      "unicode": "🌫️",
+      "description": "Туман",
+      "usage": "Туманная погода"
+    },
+    {
+      "name": "wind",
+      "unicode": "💨",
+      "description": "Ветер",
+      "usage": "Ветровые данные"
+    },
+    {
+      "name": "thermometer",
+      "unicode": "🌡️",
+      "description": "Термометр",
+      "usage": "Температура"
+    },
+    {
+      "name": "eye",
+      "unicode": "👁️",
+      "description": "Глаз",
+      "usage": "Видимость"
+    },
+    {
+      "name": "speedometer",
+      "unicode": "⏱️",
+      "description": "Спидометр",
+      "usage": "Скорость"
+    },
+    {
+      "name": "fuel",
+      "unicode": "⛽",
+      "description": "Топливо",
+      "usage": "Расход топлива"
+    },
+    {
+      "name": "clock",
+      "unicode": "🕐",
+      "description": "Часы",
+      "usage": "Время"
+    },
+    {
+      "name": "distance",
+      "unicode": "📏",
+      "description": "Линейка",
+      "usage": "Расстояние"
+    },
+    {
+      "name": "route",
+      "unicode": "🛣️",
+      "description": "Маршрут",
+      "usage": "Путь"
+    },
+    {
+      "name": "waypoint",
+      "unicode": "🎯",
+      "description": "Цель",
+      "usage": "Точка маршрута"
+    },
+    {
+      "name": "gps",
+      "unicode": "🛰️",
+      "description": "GPS",
+      "usage": "Спутниковая навигация"
+    },
+    {
+      "name": "radar",
+      "unicode": "📡",
+      "description": "Радар",
+      "usage": "Радиолокация"
+    },
+    {
+      "name": "altitude",
+      "unicode": "⛰️",
+      "description": "Высота",
+      "usage": "Высота полета"
+    },
+    {
+      "name": "compass",
+      "unicode": "🧭",
+      "description": "Компас",
+      "usage": "Направление"
+    },
+    {
+      "name": "warning",
+      "unicode": "⚠️",
+      "description": "Предупреждение",
+      "usage": "Предупреждения"
+    },
+    {
+      "name": "error",
+      "unicode": "❌",
+      "description": "Ошибка",
+      "usage": "Ошибки"
+    },
+    {
+      "name": "success",
+      "unicode": "✅",
+      "description": "Успех",
+      "usage": "Успешные операции"
+    },
+    {
+      "name": "info",
+      "unicode": "ℹ️",
+      "description": "Информация",
+      "usage": "Информационные сообщения"
+    },
+    {
+      "name": "loading",
+      "unicode": "⏳",
+      "description": "Загрузка",
+      "usage": "Состояние загрузки"
+    },
+    {
+      "name": "refresh",
+      "unicode": "🔄",
+      "description": "Обновить",
+      "usage": "Обновление данных"
+    },
+    {
+      "name": "settings",
+      "unicode": "⚙️",
+      "description": "Настройки",
+      "usage": "Настройки приложения"
+    },
+    {
+      "name": "help",
+      "unicode": "❓",
+      "description": "Помощь",
+      "usage": "Справка"
+    },
+    {
+      "name": "close",
+      "unicode": "✖️",
+      "description": "Закрыть",
+      "usage": "Закрытие окон"
+    },
+    {
+      "name": "minimize",
+      "unicode": "➖",
+      "description": "Свернуть",
+      "usage": "Сворачивание окон"
+    },
+    {
+      "name": "maximize",
+      "unicode": "➕",
+      "description": "Развернуть",
+      "usage": "Разворачивание окон"
+    },
+    {
+      "name": "zoom-in",
+      "unicode": "🔍+",
+      "description": "Увеличить",
+      "usage": "Увеличение карты"
+    },
+    {
+      "name": "zoom-out",
+      "unicode": "🔍-",
+      "description": "Уменьшить",
+      "usage": "Уменьшение карты"
+    },
+    {
+      "name": "fullscreen",
+      "unicode": "⛶",
+      "description": "Полный экран",
+      "usage": "Полноэкранный режим"
+    },
+    {
+      "name": "download",
+      "unicode": "⬇️",
+      "description": "Скачать",
+      "usage": "Загрузка файлов"
+    },
+    {
+      "name": "upload",
+      "unicode": "⬆️",
+      "description": "Загрузить",
+      "usage": "Загрузка файлов"
+    },
+    {
+      "name": "export",
+      "unicode": "📤",
+      "description": "Экспорт",
+      "usage": "Экспорт данных"
+    },
+    {
+      "name": "import",
+      "unicode": "📥",
+      "description": "Импорт",
+      "usage": "Импорт данных"
+    },
+    {
+      "name": "save",
+      "unicode": "💾",
+      "description": "Сохранить",
+      "usage": "Сохранение данных"
+    },
+    {
+      "name": "edit",
+      "unicode": "✏️",
+      "description": "Редактировать",
+      "usage": "Редактирование"
+    },
+    {
+      "name": "delete",
+      "unicode": "🗑️",
+      "description": "Удалить",
+      "usage": "Удаление данных"
+    },
+    {
+      "name": "add",
+      "unicode": "➕",
+      "description": "Добавить",
+      "usage": "Добавление элементов"
+    },
+    {
+      "name": "remove",
+      "unicode": "➖",
+      "description": "Убрать",
+      "usage": "Удаление элементов"
+    },
+    {
+      "name": "search",
+      "unicode": "🔍",
+      "description": "Поиск",
+      "usage": "Поиск данных"
+    },
+    {
+      "name": "filter",
+      "unicode": "🔽",
+      "description": "Фильтр",
+      "usage": "Фильтрация данных"
+    },
+    {
+      "name": "sort",
+      "unicode": "🔀",
+      "description": "Сортировка",
+      "usage": "Сортировка данных"
+    },
+    {
+      "name": "list",
+      "unicode": "📋",
+      "description": "Список",
+      "usage": "Список элементов"
+    },
+    {
+      "name": "grid",
+      "unicode": "⊞",
+      "description": "Сетка",
+      "usage": "Сетка элементов"
+    },
+    {
+      "name": "chart",
+      "unicode": "📊",
+      "description": "График",
+      "usage": "Графики и диаграммы"
+    },
+    {
+      "name": "table",
+      "unicode": "📋",
+      "description": "Таблица",
+      "usage": "Табличные данные"
+    }
+  ],
+  "statusIndicators": [
+    {
+      "name": "GPS",
+      "color": "#00FF00",
+      "description": "GPS статус",
+      "states": ["active", "inactive", "error"]
+    },
+    {
+      "name": "NAV",
+      "color": "#FFAA00",
+      "description": "Навигация",
+      "states": ["active", "inactive", "error"]
+    },
+    {
+      "name": "CALC",
+      "color": "#00FF00",
+      "description": "Калькулятор",
+      "states": ["active", "inactive", "error"]
+    },
+    {
+      "name": "WX",
+      "color": "#00AAFF",
+      "description": "Погода",
+      "states": ["active", "inactive", "error"]
+    }
+  ],
+  "weatherIcons": [
+    {
+      "name": "clear-sky",
+      "unicode": "☀️",
+      "description": "Ясное небо",
+      "conditions": ["clear", "sunny"]
+    },
+    {
+      "name": "few-clouds",
+      "unicode": "🌤️",
+      "description": "Малооблачно",
+      "conditions": ["few-clouds", "partly-cloudy"]
+    },
+    {
+      "name": "scattered-clouds",
+      "unicode": "⛅",
+      "description": "Рассеянные облака",
+      "conditions": ["scattered-clouds", "partly-cloudy"]
+    },
+    {
+      "name": "broken-clouds",
+      "unicode": "☁️",
+      "description": "Облачно",
+      "conditions": ["broken-clouds", "cloudy"]
+    },
+    {
+      "name": "shower-rain",
+      "unicode": "🌦️",
+      "description": "Ливень",
+      "conditions": ["shower-rain", "rain"]
+    },
+    {
+      "name": "rain",
+      "unicode": "🌧️",
+      "description": "Дождь",
+      "conditions": ["rain", "drizzle"]
+    },
+    {
+      "name": "thunderstorm",
+      "unicode": "⛈️",
+      "description": "Гроза",
+      "conditions": ["thunderstorm", "storm"]
+    },
+    {
+      "name": "snow",
+      "unicode": "❄️",
+      "description": "Снег",
+      "conditions": ["snow", "sleet"]
+    },
+    {
+      "name": "mist",
+      "unicode": "🌫️",
+      "description": "Туман",
+      "conditions": ["mist", "fog", "haze"]
+    }
+  ],
+  "animations": [
+    {
+      "name": "pulse",
+      "description": "Пульсация",
+      "keyframes": [
+        {"time": "0%", "opacity": "1", "transform": "scale(1)"},
+        {"time": "50%", "opacity": "0.7", "transform": "scale(1.1)"},
+        {"time": "100%", "opacity": "1", "transform": "scale(1)"}
+      ],
+      "duration": "2s",
+      "iteration": "infinite",
+      "usage": "Статусные индикаторы"
+    },
+    {
+      "name": "glow",
+      "description": "Свечение",
+      "keyframes": [
+        {"time": "0%", "box-shadow": "0 0 5px rgba(0, 255, 0, 0.3)"},
+        {"time": "50%", "box-shadow": "0 0 20px rgba(0, 255, 0, 0.6)"},
+        {"time": "100%", "box-shadow": "0 0 5px rgba(0, 255, 0, 0.3)"}
+      ],
+      "duration": "2s",
+      "iteration": "infinite",
+      "usage": "Активные элементы"
+    },
+    {
+      "name": "slide-in-right",
+      "description": "Въезд справа",
+      "keyframes": [
+        {"time": "0%", "transform": "translateX(100%)", "opacity": "0"},
+        {"time": "100%", "transform": "translateX(0)", "opacity": "1"}
+      ],
+      "duration": "300ms",
+      "iteration": "1",
+      "usage": "Уведомления"
+    },
+    {
+      "name": "fade-in",
+      "description": "Появление",
+      "keyframes": [
+        {"time": "0%", "opacity": "0", "transform": "translateY(10px)"},
+        {"time": "100%", "opacity": "1", "transform": "translateY(0)"}
+      ],
+      "duration": "300ms",
+      "iteration": "1",
+      "usage": "Элементы интерфейса"
+    }
+  ],
+  "patterns": [
+    {
+      "name": "grid-pattern",
+      "description": "Сетчатый паттерн",
+      "type": "background",
+      "usage": "Фоновые элементы"
+    },
+    {
+      "name": "radar-sweep",
+      "description": "Радарная развертка",
+      "type": "animation",
+      "usage": "Радарные экраны"
+    },
+    {
+      "name": "scan-lines",
+      "description": "Сканирующие линии",
+      "type": "animation",
+      "usage": "Эффекты сканирования"
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EFB Flight Calculator - Architecture Diagram (A4, print-ready SVG) -->
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+  <!-- Styles -->
+  <defs>
+    <style><![CDATA[
+      .title { font: 7px Inter, Arial, sans-serif; font-weight: 700; fill: #0f172a; }
+      .subtitle { font: 4px Inter, Arial, sans-serif; fill: #334155; }
+      .label { font: 3.2px Inter, Arial, sans-serif; fill: #0f172a; }
+      .small { font: 2.8px Inter, Arial, sans-serif; fill: #334155; }
+      .box { fill: #ffffff; stroke: #0ea5e9; stroke-width: 0.4; rx: 1.2; ry: 1.2; }
+      .layer { fill: #f1f5f9; stroke: #94a3b8; stroke-width: 0.3; rx: 1.5; ry: 1.5; }
+      .arrow { stroke: #0f172a; stroke-width: 0.3; marker-end: url(#arrowHead); fill: none; }
+      .grid { stroke: #e2e8f0; stroke-width: 0.1; }
+      .pill { fill: #ecfeff; stroke: #0891b2; stroke-width: 0.3; rx: 0.8; ry: 0.8; }
+      .note { fill: #eef2ff; stroke: #6366f1; stroke-width: 0.25; rx: 0.8; ry: 0.8; }
+      .ok { fill: #10b981; }
+    ]]></style>
+    <marker id="arrowHead" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L6,3 L0,6 z" fill="#0f172a" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="105" y="14" text-anchor="middle" class="title">EFB Flight Calculator</text>
+  <text x="105" y="20" text-anchor="middle" class="subtitle">Схема связей модулей (A4, печать)</text>
+
+  <!-- Layers row titles -->
+  <text x="35" y="34" text-anchor="middle" class="small">Presentation Layer</text>
+  <text x="105" y="34" text-anchor="middle" class="small">Business Logic Layer</text>
+  <text x="175" y="34" text-anchor="middle" class="small">Data Access Layer</text>
+
+  <!-- Layer containers -->
+  <rect x="10" y="36" width="60" height="70" class="layer" />
+  <rect x="80" y="36" width="60" height="70" class="layer" />
+  <rect x="150" y="36" width="50" height="70" class="layer" />
+
+  <!-- Presentation: core-ui -->
+  <rect x="15" y="44" width="50" height="54" class="box" />
+  <text x="40" y="50" text-anchor="middle" class="label">core-ui/</text>
+  <rect x="19" y="56" width="42" height="9" class="pill" />
+  <text x="40" y="62" text-anchor="middle" class="small">efb-layout.html</text>
+  <rect x="19" y="68" width="42" height="9" class="pill" />
+  <text x="40" y="74" text-anchor="middle" class="small">efb-styles.css</text>
+  <rect x="19" y="80" width="42" height="9" class="pill" />
+  <text x="40" y="86" text-anchor="middle" class="small">route/map panels</text>
+
+  <!-- Business: calculations + weather-module -->
+  <rect x="85" y="44" width="50" height="54" class="box" />
+  <text x="110" y="50" text-anchor="middle" class="label">calculations/</text>
+  <rect x="89" y="56" width="42" height="8" class="pill" />
+  <text x="110" y="61" text-anchor="middle" class="small">distance, time, fuel</text>
+  <rect x="89" y="66" width="42" height="8" class="pill" />
+  <text x="110" y="71" text-anchor="middle" class="small">route optimizer</text>
+  
+  <rect x="85" y="100" width="50" height="10" class="note" />
+  <text x="110" y="106" text-anchor="middle" class="small">weather-module (consolidated)</text>
+
+  <!-- Data: mcp-integration -->
+  <rect x="155" y="44" width="40" height="54" class="box" />
+  <text x="175" y="50" text-anchor="middle" class="label">mcp-integration/</text>
+  <rect x="159" y="56" width="32" height="8" class="pill" />
+  <text x="175" y="61" text-anchor="middle" class="small">mcp-client</text>
+  <rect x="159" y="66" width="32" height="8" class="pill" />
+  <text x="175" y="71" text-anchor="middle" class="small">mcp-tools</text>
+
+  <!-- Shared row -->
+  <rect x="10" y="120" width="190" height="28" class="layer" />
+  <text x="20" y="128" class="small">shared/</text>
+  <rect x="18" y="132" width="40" height="12" class="box" />
+  <text x="38" y="138" text-anchor="middle" class="small">event-bus.js</text>
+  <rect x="62" y="132" width="40" height="12" class="box" />
+  <text x="82" y="138" text-anchor="middle" class="small">utils.js</text>
+  <rect x="106" y="132" width="40" height="12" class="box" />
+  <text x="126" y="138" text-anchor="middle" class="small">constants.js</text>
+  <rect x="150" y="132" width="50" height="12" class="box" />
+  <text x="175" y="138" text-anchor="middle" class="small">index.html / main.js</text>
+
+  <!-- Integration row -->
+  <rect x="10" y="154" width="190" height="30" class="layer" />
+  <text x="20" y="162" class="small">integration/</text>
+  <rect x="18" y="166" width="50" height="14" class="box" />
+  <text x="43" y="172" text-anchor="middle" class="small">module-loader.js</text>
+  <rect x="72" y="166" width="50" height="14" class="box" />
+  <text x="97" y="172" text-anchor="middle" class="small">smart-cache.js</text>
+  <rect x="126" y="166" width="30" height="14" class="box" />
+  <text x="141" y="172" text-anchor="middle" class="small">efb-cache.js</text>
+  <rect x="160" y="166" width="40" height="14" class="box" />
+  <text x="180" y="172" text-anchor="middle" class="small">predictive-cache.js</text>
+
+  <!-- External APIs -->
+  <rect x="10" y="190" width="190" height="26" class="layer" />
+  <text x="20" y="198" class="small">External APIs</text>
+  <rect x="18" y="202" width="50" height="10" class="box" />
+  <text x="43" y="208" text-anchor="middle" class="small">Weather API</text>
+  <rect x="72" y="202" width="50" height="10" class="box" />
+  <text x="97" y="208" text-anchor="middle" class="small">MCP Servers</text>
+  <rect x="126" y="202" width="50" height="10" class="box" />
+  <text x="151" y="208" text-anchor="middle" class="small">GPX Parser</text>
+
+  <!-- Arrows: core-ui -> calculations -->
+  <path class="arrow" d="M65,71 C75,71 75,71 85,71" />
+  <!-- Arrows: calculations -> mcp-integration -->
+  <path class="arrow" d="M135,71 C145,71 145,71 155,71" />
+  <!-- Arrows: weather-module depends on shared -->
+  <path class="arrow" d="M110,100 C110,112 110,120 110,132" />
+  <!-- Arrows: core-ui uses shared -->
+  <path class="arrow" d="M40,98 C40,112 40,120 40,132" />
+  <!-- Arrows: mcp-integration uses shared -->
+  <path class="arrow" d="M175,98 C175,112 175,120 175,132" />
+  <!-- Arrows: integration ties layers -->
+  <path class="arrow" d="M105,148 C105,154 105,154 105,166" />
+
+  <!-- Footer note -->
+  <rect x="10" y="222" width="190" height="16" class="note" />
+  <text x="105" y="232" text-anchor="middle" class="small">Примечание: weather-module консолидирует все погодные расчеты и заменяет разбросанные weather-* файлы.</text>
+</svg>

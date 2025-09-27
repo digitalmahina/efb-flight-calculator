@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авиационный Калькулятор</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .input-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .input-group input {
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .file-upload {
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9ff;
+        }
+
+        .file-upload:hover {
+            background: #f0f2ff;
+            border-color: #5a6fd8;
+        }
+
+        .file-upload.dragover {
+            background: #e8ecff;
+            border-color: #4c63d2;
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .upload-text {
+            font-size: 18px;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .upload-hint {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .calculate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results-section {
+            display: none;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .result-card h3 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .result-card .value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .result-card .unit {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .route-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .route-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .route-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .route-table tr:hover {
+            background: #f8f9ff;
+        }
+
+        .route-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #ff6b6b;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .input-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✈️ Авиационный Калькулятор</h1>
+            <p>Расчёт времени полёта и расхода топлива по маршруту</p>
+        </div>
+
+        <div class="calculator-card">
+            <div class="input-section">
+                <div class="input-group">
+                    <label for="cruiseSpeed">Крейсерская скорость (км/ч)</label>
+                    <input type="number" id="cruiseSpeed" value="200" min="100" max="2000">
+                </div>
+                <div class="input-group">
+                    <label for="fuelConsumption">Расход топлива (кг/ч)</label>
+                    <input type="number" id="fuelConsumption" value="600" min="100" max="2000">
+                </div>
+            </div>
+
+            <div class="file-upload" id="fileUpload">
+                <input type="file" id="gpxFile" accept=".gpx">
+                <div class="upload-text">📁 Загрузите GPX файл маршрута</div>
+                <div class="upload-hint">Перетащите файл сюда или нажмите для выбора</div>
+            </div>
+
+            <button class="calculate-btn" id="calculateBtn" disabled>
+                🚀 Рассчитать маршрут
+            </button>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Обработка маршрута...</p>
+            </div>
+
+            <div class="error" id="error"></div>
+
+            <div class="results-section" id="resultsSection">
+                <div class="results-grid">
+                    <div class="result-card">
+                        <h3>Общее расстояние</h3>
+                        <div class="value" id="totalDistance">0</div>
+                        <div class="unit">км</div>
+                    </div>
+                    <div class="result-card">
+                        <h3>Время полёта</h3>
+                        <div class="value" id="flightTime">0</div>
+                        <div class="unit">ч:мм</div>
+                    </div>
+                    <div class="result-card">
+                        <h3>Расход топлива</h3>
+                        <div class="value" id="totalFuel">0</div>
+                        <div class="unit">кг</div>
+                    </div>
+                    <div class="result-card">
+                        <h3>Количество точек</h3>
+                        <div class="value" id="pointCount">0</div>
+                        <div class="unit">точек</div>
+                    </div>
+                </div>
+
+                <table class="route-table" id="routeTable">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Название</th>
+                            <th>Широта</th>
+                            <th>Долгота</th>
+                            <th>Расстояние от предыдущей (км)</th>
+                            <th>Время до точки (ч:мм)</th>
+                            <th>Накопленный расход топлива (кг)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="routeTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class FlightCalculator {
+            constructor() {
+                this.initializeElements();
+                this.setupEventListeners();
+            }
+
+            initializeElements() {
+                this.fileUpload = document.getElementById('fileUpload');
+                this.gpxFile = document.getElementById('gpxFile');
+                this.calculateBtn = document.getElementById('calculateBtn');
+                this.loading = document.getElementById('loading');
+                this.error = document.getElementById('error');
+                this.resultsSection = document.getElementById('resultsSection');
+                this.cruiseSpeed = document.getElementById('cruiseSpeed');
+                this.fuelConsumption = document.getElementById('fuelConsumption');
+            }
+
+            setupEventListeners() {
+                this.gpxFile.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        this.calculateBtn.disabled = false;
+                    }
+                });
+
+                this.fileUpload.addEventListener('click', () => {
+                    this.gpxFile.click();
+                });
+
+                this.fileUpload.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    this.fileUpload.classList.add('dragover');
+                });
+
+                this.fileUpload.addEventListener('dragleave', () => {
+                    this.fileUpload.classList.remove('dragover');
+                });
+
+                this.fileUpload.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    this.fileUpload.classList.remove('dragover');
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0 && files[0].name.endsWith('.gpx')) {
+                        this.gpxFile.files = files;
+                        this.calculateBtn.disabled = false;
+                    }
+                });
+
+                this.calculateBtn.addEventListener('click', () => {
+                    this.calculateRoute();
+                });
+            }
+
+            showError(message) {
+                this.error.textContent = message;
+                this.error.style.display = 'block';
+                setTimeout(() => {
+                    this.error.style.display = 'none';
+                }, 5000);
+            }
+
+            calculateDistance(lat1, lon1, lat2, lon2) {
+                const R = 6371; // Радиус Земли в км
+                const dLat = this.toRadians(lat2 - lat1);
+                const dLon = this.toRadians(lon2 - lon1);
+                const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.cos(this.toRadians(lat1)) * Math.cos(this.toRadians(lat2)) *
+                    Math.sin(dLon/2) * Math.sin(dLon/2);
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+                return R * c;
+            }
+
+            toRadians(degrees) {
+                return degrees * (Math.PI/180);
+            }
+
+            parseGPX(gpxText) {
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(gpxText, 'text/xml');
+                
+                const waypoints = [];
+                const wptElements = xmlDoc.getElementsByTagName('wpt');
+                
+                for (let i = 0; i < wptElements.length; i++) {
+                    const wpt = wptElements[i];
+                    const lat = parseFloat(wpt.getAttribute('lat'));
+                    const lon = parseFloat(wpt.getAttribute('lon'));
+                    const nameElement = wpt.getElementsByTagName('name')[0];
+                    const name = nameElement ? nameElement.textContent : `Точка ${i + 1}`;
+                    
+                    waypoints.push({ lat, lon, name });
+                }
+                
+                return waypoints;
+            }
+
+            async calculateRoute() {
+                if (!this.gpxFile.files[0]) {
+                    this.showError('Пожалуйста, выберите GPX файл');
+                    return;
+                }
+
+                this.loading.style.display = 'block';
+                this.resultsSection.style.display = 'none';
+                this.calculateBtn.disabled = true;
+
+                try {
+                    const file = this.gpxFile.files[0];
+                    const gpxText = await file.text();
+                    const waypoints = this.parseGPX(gpxText);
+
+                    if (waypoints.length < 2) {
+                        throw new Error('Маршрут должен содержать минимум 2 точки');
+                    }
+
+                    const cruiseSpeed = parseFloat(this.cruiseSpeed.value);
+                    const fuelConsumption = parseFloat(this.fuelConsumption.value);
+
+                    let totalDistance = 0;
+                    let totalTime = 0;
+                    let totalFuel = 0;
+                    const routeData = [];
+
+                    for (let i = 0; i < waypoints.length; i++) {
+                        const currentPoint = waypoints[i];
+                        let distanceFromPrevious = 0;
+                        let timeToPoint = 0;
+                        let fuelToPoint = 0;
+
+                        if (i > 0) {
+                            const previousPoint = waypoints[i - 1];
+                            distanceFromPrevious = this.calculateDistance(
+                                previousPoint.lat, previousPoint.lon,
+                                currentPoint.lat, currentPoint.lon
+                            );
+                            totalDistance += distanceFromPrevious;
+                            timeToPoint = distanceFromPrevious / cruiseSpeed;
+                            totalTime += timeToPoint;
+                            fuelToPoint = timeToPoint * fuelConsumption;
+                            totalFuel += fuelToPoint;
+                        }
+
+                        routeData.push({
+                            index: i + 1,
+                            name: currentPoint.name,
+                            lat: currentPoint.lat.toFixed(6),
+                            lon: currentPoint.lon.toFixed(6),
+                            distanceFromPrevious: distanceFromPrevious.toFixed(2),
+                            timeToPoint: this.formatTime(timeToPoint),
+                            cumulativeFuel: totalFuel.toFixed(1)
+                        });
+                    }
+
+                    this.displayResults(totalDistance, totalTime, totalFuel, waypoints.length, routeData);
+
+                } catch (error) {
+                    this.showError('Ошибка при обработке файла: ' + error.message);
+                } finally {
+                    this.loading.style.display = 'none';
+                    this.calculateBtn.disabled = false;
+                }
+            }
+
+            formatTime(hours) {
+                const totalMinutes = Math.round(hours * 60);
+                const h = Math.floor(totalMinutes / 60);
+                const m = totalMinutes % 60;
+                return `${h}:${m.toString().padStart(2, '0')}`;
+            }
+
+            displayResults(totalDistance, totalTime, totalFuel, pointCount, routeData) {
+                document.getElementById('totalDistance').textContent = totalDistance.toFixed(2);
+                document.getElementById('flightTime').textContent = this.formatTime(totalTime);
+                document.getElementById('totalFuel').textContent = totalFuel.toFixed(1);
+                document.getElementById('pointCount').textContent = pointCount;
+
+                const tableBody = document.getElementById('routeTableBody');
+                tableBody.innerHTML = '';
+
+                routeData.forEach(point => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${point.index}</td>
+                        <td>${point.name}</td>
+                        <td>${point.lat}</td>
+                        <td>${point.lon}</td>
+                        <td>${point.distanceFromPrevious}</td>
+                        <td>${point.timeToPoint}</td>
+                        <td>${point.cumulativeFuel}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+
+                this.resultsSection.style.display = 'block';
+            }
+        }
+
+        // Инициализация калькулятора
+        document.addEventListener('DOMContentLoaded', () => {
+            new FlightCalculator();
+        });
+    </script>
+</body>
+</html>
