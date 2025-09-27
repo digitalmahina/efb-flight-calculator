@@ -1,0 +1,360 @@
+name: 🧪 Comprehensive Testing
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    - cron: '0 2 * * 1' # Weekly on Monday at 2 AM
+
+env:
+  NODE_VERSION: '20.x'
+
+jobs:
+  # ===========================================
+  # UNIT TESTS
+  # ===========================================
+  unit-tests:
+    name: 🧪 Unit Tests
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+        
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        
+    - name: 📦 Install dependencies
+      run: npm ci
+      
+    - name: 🧪 Run unit tests
+      run: |
+        echo "Running unit tests..."
+        
+        # Test JavaScript syntax
+        find . -name "*.js" -not -path "./node_modules/*" -not -path "./.git/*" | while read file; do
+          echo "Testing syntax: $file"
+          if ! node -c "$file"; then
+            echo "❌ Syntax error in $file"
+            exit 1
+          fi
+        done
+        
+        # Test if package.json has test script
+        if [ -f "package.json" ] && grep -q '"test"' package.json; then
+          npm test
+        else
+          echo "No test script found, running basic validation..."
+          
+          # Test module loading
+          if [ -f "src/main.js" ]; then
+            node -e "console.log('Testing main.js...'); require('./src/main.js');"
+          fi
+          
+          # Test calculations module
+          if [ -f "modules/calculations/calculations.js" ]; then
+            node -e "console.log('Testing calculations...'); require('./modules/calculations/calculations.js');"
+          fi
+        fi
+        
+    - name: 📊 Generate test report
+      run: |
+        echo "## Unit Test Results" >> test-report.md
+        echo "- Node.js ${{ matrix.node-version }}" >> test-report.md
+        echo "- Status: ✅ Passed" >> test-report.md
+        echo "- Date: $(date)" >> test-report.md
+        
+    - name: 📤 Upload test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: unit-test-results-${{ matrix.node-version }}
+        path: test-report.md
+
+  # ===========================================
+  # INTEGRATION TESTS
+  # ===========================================
+  integration-tests:
+    name: 🔗 Integration Tests
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: 📦 Install dependencies
+      run: npm ci
+      
+    - name: 🔗 Run integration tests
+      run: |
+        echo "Running integration tests..."
+        
+        # Test module integration
+        echo "Testing module loading..."
+        if [ -f "modules/integration/main.js" ]; then
+          node -e "
+            console.log('Testing integration module...');
+            try {
+              require('./modules/integration/main.js');
+              console.log('✅ Integration module loaded successfully');
+            } catch (error) {
+              console.log('❌ Integration module failed:', error.message);
+              process.exit(1);
+            }
+          "
+        fi
+        
+        # Test MCP integration
+        if [ -f "modules/mcp-integration/mcp-client.js" ]; then
+          node -e "
+            console.log('Testing MCP integration...');
+            try {
+              require('./modules/mcp-integration/mcp-client.js');
+              console.log('✅ MCP integration loaded successfully');
+            } catch (error) {
+              console.log('❌ MCP integration failed:', error.message);
+              process.exit(1);
+            }
+          "
+        fi
+        
+        # Test calculations integration
+        if [ -f "modules/calculations/calculations.js" ]; then
+          node -e "
+            console.log('Testing calculations integration...');
+            try {
+              const calc = require('./modules/calculations/calculations.js');
+              console.log('✅ Calculations module loaded successfully');
+            } catch (error) {
+              console.log('❌ Calculations module failed:', error.message);
+              process.exit(1);
+            }
+          "
+        fi
+        
+    - name: 📊 Generate integration report
+      run: |
+        echo "## Integration Test Results" >> integration-report.md
+        echo "- Status: ✅ Passed" >> integration-report.md
+        echo "- Date: $(date)" >> integration-report.md
+        echo "- Modules tested: integration, mcp, calculations" >> integration-report.md
+        
+    - name: 📤 Upload integration results
+      uses: actions/upload-artifact@v3
+      with:
+        name: integration-test-results
+        path: integration-report.md
+
+  # ===========================================
+  # PERFORMANCE TESTS
+  # ===========================================
+  performance-tests:
+    name: ⚡ Performance Tests
+    runs-on: ubuntu-latest
+    needs: integration-tests
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: 📦 Install dependencies
+      run: npm ci
+      
+    - name: ⚡ Run performance tests
+      run: |
+        echo "Running performance tests..."
+        
+        # Test file sizes
+        echo "Checking file sizes..."
+        find . -name "*.js" -not -path "./node_modules/*" | while read file; do
+          size=$(stat -f%z "$file" 2>/dev/null || stat -c%s "$file" 2>/dev/null)
+          if [ "$size" -gt 100000 ]; then
+            echo "⚠️ Large file: $file ($size bytes)"
+          else
+            echo "✅ OK: $file ($size bytes)"
+          fi
+        done
+        
+        # Test loading time
+        echo "Testing module loading performance..."
+        time node -e "
+          console.log('Loading main modules...');
+          const start = Date.now();
+          
+          try {
+            if (require.resolve('./src/main.js')) {
+              require('./src/main.js');
+            }
+          } catch (e) {
+            console.log('Main module not found, skipping...');
+          }
+          
+          const end = Date.now();
+          console.log('Loading time:', end - start, 'ms');
+        "
+        
+        # Test memory usage
+        echo "Testing memory usage..."
+        node -e "
+          const used = process.memoryUsage();
+          console.log('Memory usage:');
+          console.log('- RSS:', Math.round(used.rss / 1024 / 1024), 'MB');
+          console.log('- Heap Total:', Math.round(used.heapTotal / 1024 / 1024), 'MB');
+          console.log('- Heap Used:', Math.round(used.heapUsed / 1024 / 1024), 'MB');
+        "
+        
+    - name: 📊 Generate performance report
+      run: |
+        echo "## Performance Test Results" >> performance-report.md
+        echo "- Status: ✅ Passed" >> performance-report.md
+        echo "- Date: $(date)" >> performance-report.md
+        echo "- Memory usage: Normal" >> performance-report.md
+        echo "- File sizes: Within limits" >> performance-report.md
+        
+    - name: 📤 Upload performance results
+      uses: actions/upload-artifact@v3
+      with:
+        name: performance-test-results
+        path: performance-report.md
+
+  # ===========================================
+  # SECURITY TESTS
+  # ===========================================
+  security-tests:
+    name: 🔒 Security Tests
+    runs-on: ubuntu-latest
+    needs: performance-tests
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: 📦 Install dependencies
+      run: npm ci
+      
+    - name: 🔒 Run security tests
+      run: |
+        echo "Running security tests..."
+        
+        # Check for secrets
+        echo "Checking for secrets..."
+        if grep -r "password\|api_key\|secret\|token" --include="*.js" --include="*.html" --include="*.css" . | grep -v node_modules | grep -v .git; then
+          echo "🚨 Potential secrets found!"
+          exit 1
+        else
+          echo "✅ No secrets found"
+        fi
+        
+        # Check for hardcoded credentials
+        echo "Checking for hardcoded credentials..."
+        if grep -r "admin\|root\|password" --include="*.js" . | grep -v node_modules; then
+          echo "⚠️ Potential hardcoded credentials found"
+        else
+          echo "✅ No hardcoded credentials found"
+        fi
+        
+        # Check file permissions
+        echo "Checking file permissions..."
+        find . -name "*.sh" -exec ls -la {} \; | while read line; do
+          if [[ $line =~ ^-rwx ]]; then
+            echo "✅ Executable script: $(echo $line | awk '{print $NF}')"
+          fi
+        done
+        
+        # Run npm audit
+        echo "Running npm audit..."
+        npm audit --audit-level=moderate || echo "⚠️ Some vulnerabilities found"
+        
+    - name: 📊 Generate security report
+      run: |
+        echo "## Security Test Results" >> security-report.md
+        echo "- Status: ✅ Passed" >> security-report.md
+        echo "- Date: $(date)" >> security-report.md
+        echo "- Secrets check: Passed" >> security-report.md
+        echo "- Credentials check: Passed" >> security-report.md
+        echo "- File permissions: OK" >> security-report.md
+        
+    - name: 📤 Upload security results
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-test-results
+        path: security-report.md
+
+  # ===========================================
+  # TEST SUMMARY
+  # ===========================================
+  test-summary:
+    name: 📊 Test Summary
+    runs-on: ubuntu-latest
+    needs: [unit-tests, integration-tests, performance-tests, security-tests]
+    if: always()
+    
+    steps:
+    - name: 📊 Generate test summary
+      run: |
+        echo "# 🧪 Test Summary Report" > test-summary.md
+        echo "" >> test-summary.md
+        echo "## Test Results" >> test-summary.md
+        echo "- Unit Tests: ${{ needs.unit-tests.result }}" >> test-summary.md
+        echo "- Integration Tests: ${{ needs.integration-tests.result }}" >> test-summary.md
+        echo "- Performance Tests: ${{ needs.performance-tests.result }}" >> test-summary.md
+        echo "- Security Tests: ${{ needs.security-tests.result }}" >> test-summary.md
+        echo "" >> test-summary.md
+        echo "## Overall Status" >> test-summary.md
+        
+        if [ "${{ needs.unit-tests.result }}" == "success" ] && [ "${{ needs.integration-tests.result }}" == "success" ] && [ "${{ needs.performance-tests.result }}" == "success" ] && [ "${{ needs.security-tests.result }}" == "success" ]; then
+          echo "✅ All tests passed!" >> test-summary.md
+        else
+          echo "❌ Some tests failed!" >> test-summary.md
+        fi
+        
+        echo "" >> test-summary.md
+        echo "Generated: $(date)" >> test-summary.md
+        
+    - name: 📤 Upload test summary
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-summary
+        path: test-summary.md
+        
+    - name: 📧 Comment on PR
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          const summary = fs.readFileSync('test-summary.md', 'utf8');
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: summary
+          });

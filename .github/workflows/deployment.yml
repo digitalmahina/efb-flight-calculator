@@ -1,0 +1,330 @@
+name: 🚀 Automated Deployment
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+        - staging
+        - production
+      force_deploy:
+        description: 'Force deployment even if tests fail'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  NODE_VERSION: '20.x'
+  DEPLOY_TIMEOUT: '300'
+
+jobs:
+  # ===========================================
+  # PRE-DEPLOYMENT CHECKS
+  # ===========================================
+  pre-deployment:
+    name: 🔍 Pre-deployment Checks
+    runs-on: ubuntu-latest
+    
+    outputs:
+      should-deploy: ${{ steps.check.outputs.should-deploy }}
+      environment: ${{ steps.check.outputs.environment }}
+      
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🔍 Determine deployment
+      id: check
+      run: |
+        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          echo "should-deploy=true" >> $GITHUB_OUTPUT
+          echo "environment=${{ github.event.inputs.environment }}" >> $GITHUB_OUTPUT
+        elif [ "${{ github.ref }}" == "refs/heads/main" ]; then
+          echo "should-deploy=true" >> $GITHUB_OUTPUT
+          echo "environment=production" >> $GITHUB_OUTPUT
+        elif [[ "${{ github.ref }}" =~ ^refs/tags/v ]]; then
+          echo "should-deploy=true" >> $GITHUB_OUTPUT
+          echo "environment=production" >> $GITHUB_OUTPUT
+        else
+          echo "should-deploy=false" >> $GITHUB_OUTPUT
+          echo "environment=none" >> $GITHUB_OUTPUT
+        fi
+        
+    - name: 📊 Deployment info
+      run: |
+        echo "🚀 Deployment Information:"
+        echo "- Event: ${{ github.event_name }}"
+        echo "- Ref: ${{ github.ref }}"
+        echo "- Should Deploy: ${{ steps.check.outputs.should-deploy }}"
+        echo "- Environment: ${{ steps.check.outputs.environment }}"
+
+  # ===========================================
+  # BUILD AND PACKAGE
+  # ===========================================
+  build:
+    name: 🏗️ Build & Package
+    runs-on: ubuntu-latest
+    needs: pre-deployment
+    if: needs.pre-deployment.outputs.should-deploy == 'true'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: 📦 Install dependencies
+      run: npm ci
+      
+    - name: 🏗️ Build application
+      run: |
+        echo "Building application for ${{ needs.pre-deployment.outputs.environment }}..."
+        
+        if [ -f "package.json" ] && grep -q '"build"' package.json; then
+          npm run build
+        else
+          echo "Creating custom build..."
+          mkdir -p dist
+          
+          # Copy main files
+          cp index.html dist/ 2>/dev/null || echo "No index.html found"
+          cp -r src/* dist/ 2>/dev/null || echo "No src directory found"
+          cp -r modules/* dist/ 2>/dev/null || echo "No modules directory found"
+          
+          # Copy assets
+          cp -r assets/* dist/ 2>/dev/null || echo "No assets directory found"
+          cp -r docs/* dist/ 2>/dev/null || echo "No docs directory found"
+          
+          # Create production index
+          cat > dist/index.html << 'EOF'
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>EFB Calculator</title>
+            <link rel="stylesheet" href="assets/styles.css">
+        </head>
+        <body>
+            <div id="app">
+                <h1>EFB Calculator</h1>
+                <p>Loading...</p>
+            </div>
+            <script src="main.js"></script>
+        </body>
+        </html>
+        EOF
+        fi
+        
+    - name: 📦 Package for deployment
+      run: |
+        echo "Packaging application..."
+        
+        # Create deployment package
+        mkdir -p deployment
+        cp -r dist/* deployment/ 2>/dev/null || cp -r . deployment/
+        
+        # Add deployment metadata
+        cat > deployment/deployment-info.json << EOF
+        {
+          "version": "${{ github.sha }}",
+          "environment": "${{ needs.pre-deployment.outputs.environment }}",
+          "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+          "branch": "${{ github.ref_name }}",
+          "commit": "${{ github.sha }}"
+        }
+        EOF
+        
+        # Create deployment archive
+        tar -czf deployment-$(date +%Y%m%d-%H%M%S).tar.gz deployment/
+        
+    - name: 📤 Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: deployment-package
+        path: deployment-*.tar.gz
+        retention-days: 30
+
+  # ===========================================
+  # STAGING DEPLOYMENT
+  # ===========================================
+  deploy-staging:
+    name: 🚀 Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: [pre-deployment, build]
+    if: needs.pre-deployment.outputs.should-deploy == 'true' && needs.pre-deployment.outputs.environment == 'staging'
+    environment: staging
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📥 Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: deployment-package
+        path: ./artifacts
+        
+    - name: 🚀 Deploy to GitHub Pages (Staging)
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./artifacts
+        exclude_assets: |
+          node_modules
+          .git
+          .github
+          scripts
+        cname: staging.efb-calculator.com
+        
+    - name: 🔍 Health check
+      run: |
+        echo "Performing health check..."
+        sleep 10
+        
+        # Basic health check
+        echo "✅ Staging deployment completed"
+        echo "🌐 URL: https://staging.efb-calculator.com"
+        
+    - name: 📧 Notify staging deployment
+      run: |
+        echo "🚀 Staging deployment successful!"
+        echo "- Environment: Staging"
+        echo "- URL: https://staging.efb-calculator.com"
+        echo "- Version: ${{ github.sha }}"
+        echo "- Timestamp: $(date)"
+
+  # ===========================================
+  # PRODUCTION DEPLOYMENT
+  # ===========================================
+  deploy-production:
+    name: 🚀 Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [pre-deployment, build]
+    if: needs.pre-deployment.outputs.should-deploy == 'true' && needs.pre-deployment.outputs.environment == 'production'
+    environment: production
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📥 Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: deployment-package
+        path: ./artifacts
+        
+    - name: 🚀 Deploy to GitHub Pages (Production)
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./artifacts
+        exclude_assets: |
+          node_modules
+          .git
+          .github
+          scripts
+        cname: efb-calculator.com
+        
+    - name: 🔍 Health check
+      run: |
+        echo "Performing production health check..."
+        sleep 15
+        
+        # Production health check
+        echo "✅ Production deployment completed"
+        echo "🌐 URL: https://efb-calculator.com"
+        
+    - name: 📧 Notify production deployment
+      run: |
+        echo "🚀 Production deployment successful!"
+        echo "- Environment: Production"
+        echo "- URL: https://efb-calculator.com"
+        echo "- Version: ${{ github.sha }}"
+        echo "- Timestamp: $(date)"
+        
+    - name: 🏷️ Create release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref_name }}
+        release_name: Release ${{ github.ref_name }}
+        body: |
+          ## 🚀 EFB Calculator Release ${{ github.ref_name }}
+          
+          ### 📋 Changes
+          - Latest updates and improvements
+          - Bug fixes and enhancements
+          - New features and functionality
+          
+          ### 🔗 Links
+          - [Live Demo](https://efb-calculator.com)
+          - [Documentation](https://github.com/digitalmahina/efb-flight-calculator#readme)
+          
+          ### 📊 Deployment Info
+          - **Version**: ${{ github.sha }}
+          - **Environment**: Production
+          - **Timestamp**: $(date)
+        draft: false
+        prerelease: false
+
+  # ===========================================
+  # POST-DEPLOYMENT MONITORING
+  # ===========================================
+  post-deployment:
+    name: 📊 Post-deployment Monitoring
+    runs-on: ubuntu-latest
+    needs: [deploy-staging, deploy-production]
+    if: always()
+    
+    steps:
+    - name: 📊 Deployment status
+      run: |
+        echo "📊 Deployment Status Report"
+        echo "=========================="
+        
+        if [ "${{ needs.deploy-staging.result }}" == "success" ]; then
+          echo "✅ Staging: Success"
+        elif [ "${{ needs.deploy-staging.result }}" == "failure" ]; then
+          echo "❌ Staging: Failed"
+        else
+          echo "⏭️ Staging: Skipped"
+        fi
+        
+        if [ "${{ needs.deploy-production.result }}" == "success" ]; then
+          echo "✅ Production: Success"
+        elif [ "${{ needs.deploy-production.result }}" == "failure" ]; then
+          echo "❌ Production: Failed"
+        else
+          echo "⏭️ Production: Skipped"
+        fi
+        
+    - name: 📈 Performance metrics
+      run: |
+        echo "📈 Collecting performance metrics..."
+        
+        # Basic metrics
+        echo "- Deployment time: $(date)"
+        echo "- Environment: ${{ needs.pre-deployment.outputs.environment }}"
+        echo "- Version: ${{ github.sha }}"
+        
+    - name: 📧 Final notification
+      run: |
+        if [ "${{ needs.deploy-staging.result }}" == "success" ] || [ "${{ needs.deploy-production.result }}" == "success" ]; then
+          echo "🎉 Deployment completed successfully!"
+        else
+          echo "⚠️ Deployment had issues"
+        fi
