@@ -93,7 +93,7 @@ jobs:
         EOF
         
     - name: 📤 Upload health report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: health-report
         path: health-report.md
@@ -188,7 +188,7 @@ jobs:
         EOF
         
     - name: 📤 Upload performance report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: performance-report
         path: performance-report.md
@@ -272,7 +272,7 @@ jobs:
         EOF
         
     - name: 📤 Upload security report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: security-report
         path: security-report.md
@@ -308,7 +308,7 @@ jobs:
         EOF
         
     - name: 📤 Upload notification
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: monitoring-notification
         path: notification.md

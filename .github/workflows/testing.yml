@@ -74,7 +74,7 @@ jobs:
         echo "- Date: $(date)" >> test-report.md
         
     - name: 📤 Upload test results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: unit-test-results-${{ matrix.node-version }}
         path: test-report.md
@@ -155,7 +155,7 @@ jobs:
         echo "- Modules tested: integration, mcp, calculations" >> integration-report.md
         
     - name: 📤 Upload integration results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: integration-test-results
         path: integration-report.md
@@ -233,7 +233,7 @@ jobs:
         echo "- File sizes: Within limits" >> performance-report.md
         
     - name: 📤 Upload performance results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: performance-test-results
         path: performance-report.md
@@ -302,7 +302,7 @@ jobs:
         echo "- File permissions: OK" >> security-report.md
         
     - name: 📤 Upload security results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: security-test-results
         path: security-report.md
@@ -339,7 +339,7 @@ jobs:
         echo "Generated: $(date)" >> test-summary.md
         
     - name: 📤 Upload test summary
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: test-summary
         path: test-summary.md

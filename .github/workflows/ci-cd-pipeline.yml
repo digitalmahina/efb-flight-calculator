@@ -169,7 +169,7 @@ jobs:
         tar -czf artifacts/build-$(date +%Y%m%d-%H%M%S).tar.gz dist/ 2>/dev/null || echo "No dist directory to package"
         
     - name: 📤 Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: build-artifacts
         path: artifacts/
